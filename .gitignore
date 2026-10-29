@@ -9,3 +9,11 @@ CLAUDE.local.md
 __pycache__/
 .DS_Store
 Thumbs.db
+
+# Volcado del sitio viejo (sin sanear)
+migracion/
+# Paquete de importación (contenido saneado + imágenes)
+wordpress/import/
+wordpress/CREDENCIALES-LOCAL.txt
+# Notas internas del cliente (diagnóstico de seguridad): nunca al repo público
+*.local.md
