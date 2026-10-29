@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EAF6F1;font-family:Inter,sans-serif;color:#0F1220}
+a{color:#C2410C;text-decoration:none}a:hover{color:#9A3412}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+img{display:block}
+</style>
+</helmet>
+<!-- ================= 3a PIZARRA ================= -->
+<div id="pizarra" style="display:flex;justify-content:center">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    
+    <div style="width:100%;max-width:1280px;background:#EAF6F1;color:#0B1026;font-family:Inter,sans-serif">
+      <div style="background:#0B1026;color:#fff"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 48px;font-size:12px;color:#8FA3A0;border-bottom:1px solid rgba(255,255,255,.08)"><span style="text-transform:capitalize">{{ today }}</span><div style="display:flex;gap:14px;align-items:center"><span style="color:#fff;font-weight:600">Facebook</span><span style="background:#9BE15D;color:#0B1026;padding:6px 14px;font-weight:700;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)">Anúnciese</span></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 48px;gap:24px"><img src="uploads/pasted-1793297480953-0.png" style="height:84px;width:auto;margin:-10px 0"><nav style="display:flex;gap:26px;font:700 15px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.08em;white-space:nowrap"><span style="color:#9BE15D;border-bottom:3px solid #9BE15D;padding-bottom:4px">Inicio</span><span>Fútbol Nacional</span><span>Fútbol Internacional</span><span>Otras Disciplinas</span><span>Baúl de los Recuerdos</span><span>Opinión del Director</span><span>Contacto</span></nav><span style="width:38px;height:38px;border:2px solid #2DD4BF;color:#2DD4BF;display:grid;place-items:center;font-size:15px;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)">⌕</span></div></div>
+      <div style="display:flex;overflow:hidden;background:#2DD4BF;color:#0B1026"><span style="background:#9BE15D;font:800 14px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.14em;padding:10px 28px 10px 48px;flex:none;white-space:nowrap;clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%)">Última hora</span><div style="overflow:hidden;flex:1;display:flex;align-items:center"><div style="display:flex;gap:56px;white-space:nowrap;animation:ticker 40s linear infinite;font:700 14px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.04em"><sc-for list="{{ tickerLoop }}" as="t" hint-placeholder-count="12"><span style="display:flex;gap:16px"><span>//</span>{{ t }}</span></sc-for></div></div></div>
+
+      <div style="display:grid;grid-template-columns:3fr 2fr;gap:0;position:relative">
+        <div style="position:relative;aspect-ratio:16/10;background:#101733;overflow:hidden;clip-path:polygon(0 0,100% 0,calc(100% - 72px) 100%,0 100%)"><img src="{{ hero.img }}" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;bottom:0;right:72px;background:#0B1026;padding:28px 48px 32px;display:flex;flex-direction:column;gap:12px;clip-path:polygon(0 0,100% 0,calc(100% - 52px) 100%,0 100%)"><span style="align-self:flex-start;background:#9BE15D;color:#0B1026;font:800 12px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.14em;padding:4px 10px">{{ hero.cat }}</span><h1 style="margin:0;font:800 54px/.98 'Barlow Condensed';text-transform:uppercase;text-wrap:pretty;max-width:640px">{{ hero.title }}</h1><span style="font-size:13px;color:#8FA3A0">{{ hero.date }} · Miguel Delgado Segura</span></div></div>
+        <div style="display:flex;flex-direction:column;padding:12px 48px 12px 0;margin-left:-40px;background:#EAF6F1"><sc-for list="{{ heroSide }}" as="a" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:56px 1fr 96px;gap:16px;padding:18px 0;border-bottom:1px dashed rgba(15,118,110,.4);flex:1;align-items:center"><span style="font:800 44px/1 'Barlow Condensed';color:transparent;-webkit-text-stroke:1.5px #0F766E">0{{ a.n }}</span><div style="display:flex;flex-direction:column;gap:6px"><span style="font:700 11px Inter;text-transform:uppercase;letter-spacing:.12em;color:{{ a.tealDark }}">{{ a.cat }}</span><span style="font:700 20px/1.1 'Barlow Condensed';text-wrap:pretty">{{ a.title }}</span><span style="font-size:11px;color:#4B6B63">{{ a.date }}</span></div><div style="aspect-ratio:1;background:#D4E6DF;overflow:hidden;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)"><img src="{{ a.img }}" style="width:100%;height:100%;object-fit:cover"></div></div></sc-for></div>
+      </div>
+
+      <div style="padding:56px 48px 0"><div style="display:flex;align-items:flex-end;gap:20px;margin-bottom:24px"><span style="font:800 80px/.8 'Barlow Condensed';color:transparent;-webkit-text-stroke:2px #0B1026">01</span><h2 style="margin:0;font:800 40px/.9 'Barlow Condensed';text-transform:uppercase">Fútbol<br><span style="color:#0F766E">Internacional</span></h2><span style="height:2px;flex:1;background:repeating-linear-gradient(90deg,#0F766E 0 8px,transparent 8px 16px);margin-bottom:6px"></span><span style="font:700 13px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.14em;color:#0F766E">Ver todo →</span></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px"><sc-for list="{{ intl }}" as="a" hint-placeholder-count="4"><div style="background:#fff;display:flex;flex-direction:column;border-top:3px solid #0F766E"><div style="aspect-ratio:16/10;background:#D4E6DF;overflow:hidden;clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),0 100%)"><img src="{{ a.img }}" style="width:100%;height:100%;object-fit:cover"></div><div style="padding:14px 18px 20px;display:flex;flex-direction:column;gap:8px"><span style="font:700 11px Inter;text-transform:uppercase;letter-spacing:.12em;color:#0F766E">Fútbol · {{ a.date }}</span><span style="font:700 20px/1.1 'Barlow Condensed';text-wrap:pretty">{{ a.title }}</span></div></div></sc-for></div></div>
+
+      <div style="margin-top:56px;background:#0B1026;color:#fff;padding:56px 48px;clip-path:polygon(0 0,100% 28px,100% 100%,0 100%);padding-top:84px"><div style="display:flex;align-items:flex-end;gap:20px;margin-bottom:24px"><span style="font:800 80px/.8 'Barlow Condensed';color:transparent;-webkit-text-stroke:2px #9BE15D">02</span><h2 style="margin:0;font:800 40px/.9 'Barlow Condensed';text-transform:uppercase">Fútbol<br><span style="color:#9BE15D">Nacional</span></h2><span style="height:2px;flex:1;background:repeating-linear-gradient(90deg,#2DD4BF 0 8px,transparent 8px 16px);margin-bottom:6px"></span><span style="font:700 13px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.14em;color:#2DD4BF">Ver todo →</span></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px"><sc-for list="{{ nacional }}" as="a" hint-placeholder-count="4"><div style="background:#101733;display:flex;flex-direction:column;border-top:3px solid #9BE15D"><div style="aspect-ratio:16/10;background:#16203F;display:grid;place-items:center;font-size:12px;color:#8FA3A0;text-align:center;padding:12px;clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),0 100%)">[Foto · Nota de Liga Promérica]</div><div style="padding:14px 18px 20px;display:flex;flex-direction:column;gap:8px"><span style="font:700 11px Inter;text-transform:uppercase;letter-spacing:.12em;color:#9BE15D">Fútbol · [Fecha]</span><span style="font:700 20px/1.1 'Barlow Condensed';color:#8FA3A0">[Nota de Liga Promérica]</span></div></div></sc-for></div></div>
+
+      <div style="padding:56px 48px 0;display:grid;grid-template-columns:3fr 2fr;gap:48px">
+        <div><div style="display:flex;align-items:flex-end;gap:20px;margin-bottom:8px"><span style="font:800 80px/.8 'Barlow Condensed';color:transparent;-webkit-text-stroke:2px #0B1026">03</span><h2 style="margin:0;font:800 40px/.9 'Barlow Condensed';text-transform:uppercase">Otras<br><span style="color:#0F766E">Disciplinas</span></h2></div><sc-for list="{{ otras }}" as="a" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:1fr 150px;gap:18px;padding:16px 0;border-bottom:1px dashed rgba(15,118,110,.4)"><div style="display:flex;flex-direction:column;gap:6px;justify-content:center"><span style="font:700 11px Inter;text-transform:uppercase;letter-spacing:.12em;color:#0F766E">Otras Disciplinas · {{ a.date }}</span><span style="font:700 22px/1.1 'Barlow Condensed';text-wrap:pretty">{{ a.title }}</span></div><div style="aspect-ratio:3/2;background:#D4E6DF;overflow:hidden;display:grid;place-items:center;font-size:11px;color:#4B6B63;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)"><sc-if value="{{ a.img }}" hint-placeholder-val="{{ true }}"><img src="{{ a.img }}" style="width:100%;height:100%;object-fit:cover"></sc-if><sc-if value="{{ a.noImg }}" hint-placeholder-val="{{ false }}">[Foto]</sc-if></div></div></sc-for></div>
+        <div style="background:#0B1026;color:#fff;border:2px solid #9BE15D;padding:32px;display:flex;flex-direction:column;gap:20px;align-self:start;position:relative;margin-top:24px"><span style="position:absolute;top:-14px;left:24px;background:#9BE15D;color:#0B1026;padding:0 10px;font:800 13px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.16em">Opinión del Director</span><h3 style="margin:0;font:800 40px/.98 'Barlow Condensed';text-transform:uppercase;text-wrap:pretty">[Título de la columna]</h3><p style="margin:0;font-size:14px;line-height:1.6;color:#B9C7C3">[Entradilla de la columna de opinión]</p><div style="display:flex;gap:14px;align-items:center;border-top:1px dashed rgba(155,225,93,.5);padding-top:18px"><div style="width:64px;height:64px;background:#101733;display:grid;place-items:center;font-size:10px;text-align:center;color:#8FA3A0;flex:none;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)">[Foto]</div><div><div style="font:600 15px Inter">Miguel Delgado Segura</div><div style="font-size:12px;color:#8FA3A0">Periodista – Director</div></div></div></div>
+      </div>
+
+      <div style="margin-top:56px;background:#1C120A;padding:48px;border-top:3px solid #7C4A1E"><div style="display:flex;align-items:flex-end;gap:20px;margin-bottom:24px"><span style="font:800 80px/.8 'Barlow Condensed';color:transparent;-webkit-text-stroke:2px #C9A880">04</span><h2 style="margin:0;font:800 40px/.9 'Barlow Condensed';text-transform:uppercase;color:#E9D9C3">Baúl de los<br><span style="color:#C9A880">Recuerdos</span></h2><span style="height:2px;flex:1;background:repeating-linear-gradient(90deg,#7C4A1E 0 8px,transparent 8px 16px);margin-bottom:6px"></span><span style="font:700 13px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.14em;color:#C9A880">Archivo</span></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px"><sc-for list="{{ baul }}" as="a" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:12px"><div style="aspect-ratio:3/2;background:#3B2614;overflow:hidden;filter:sepia(1) contrast(.85);display:grid;place-items:center;color:#C9A880;font-size:12px;clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),0 100%)"><sc-if value="{{ a.img }}" hint-placeholder-val="{{ true }}"><img src="{{ a.img }}" style="width:100%;height:100%;object-fit:cover"></sc-if><sc-if value="{{ a.noImg }}" hint-placeholder-val="{{ false }}">[Foto de archivo]</sc-if></div><span style="font:700 22px/1.1 'Barlow Condensed';color:#F3E9DA">{{ a.title }}</span></div></sc-for></div></div>
+
+      <div style="background:#fff;color:#0B1026;padding:56px 48px"><div style="display:flex;align-items:flex-end;gap:20px;margin-bottom:24px"><span style="font:800 80px/.8 'Barlow Condensed';color:transparent;-webkit-text-stroke:2px #0B1026">05</span><h2 style="margin:0;font:800 40px/.9 'Barlow Condensed';text-transform:uppercase">Nuestros<br><span style="color:#0F766E">patrocinadores</span></h2></div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px"><sc-for list="{{ sponsors }}" as="s" hint-placeholder-count="11"><div style="background:#EAF6F1;padding:12px;display:flex;flex-direction:column;gap:10px;border-bottom:3px solid #2DD4BF"><div style="aspect-ratio:2/3;background:#D4E6DF;overflow:hidden"><img src="{{ s }}" style="width:100%;height:100%;object-fit:cover"></div><span style="font-size:13px;font-weight:600;color:#4B6B63">[Nombre del patrocinador]</span><span style="align-self:flex-start;background:#0B1026;color:#9BE15D;font-size:12px;font-weight:700;padding:6px 16px;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)">Ver más</span></div></sc-for></div>
+        <div style="margin-top:32px;background:#0B1026;color:#fff;padding:32px 40px;display:flex;justify-content:space-between;align-items:center;gap:24px;clip-path:polygon(0 0,100% 0,calc(100% - 28px) 100%,0 100%)"><span style="font:800 36px/.98 'Barlow Condensed';text-transform:uppercase;text-wrap:pretty;max-width:760px">¿Quiere que su marca llegue a <span style="color:#9BE15D">miles de aficionados</span>? Anúnciese con nosotros</span><span style="background:#9BE15D;color:#0B1026;font-weight:700;padding:14px 26px;flex:none;margin-right:28px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)">Anúnciese</span></div></div>
+
+      <footer style="background:#0B1026;color:#fff;padding:48px;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;border-top:3px solid #2DD4BF"><div style="display:flex;flex-direction:column;gap:14px"><img src="uploads/pasted-1793297480953-0.png" style="height:96px;width:auto;align-self:flex-start;margin:-12px 0 -8px -8px"><span style="font:700 20px 'Barlow Condensed';color:#9BE15D;text-transform:uppercase;letter-spacing:.08em">Deportes todo el día</span><div style="display:flex;gap:20px;font-size:13px;color:#B9C7C3"><span>Contacto</span><span>Política de privacidad</span><span>Términos y condiciones</span></div><div style="display:flex;gap:16px;font:700 13px Inter;text-transform:uppercase;letter-spacing:.08em;color:#2DD4BF"><span>Facebook</span><span>X</span><span>Instagram</span></div><span style="font-size:12px;color:#8FA3A0;margin-top:auto">© 2026 Atardecer Deportivo</span></div><img src="assets/wp/2025/05/WhatsApp-Image-2025-05-15-at-09.49.15_b50260cf-1024x1024.jpg" style="width:100%;aspect-ratio:1;object-fit:cover;clip-path:polygon(16px 0,100% 0,calc(100% - 16px) 100%,0 100%)"><img src="assets/wp/2025/09/WhatsApp-Image-2025-09-30-at-16.59.38-2-895x1024.jpeg" style="width:100%;aspect-ratio:1;object-fit:cover;clip-path:polygon(16px 0,100% 0,calc(100% - 16px) 100%,0 100%)"></footer>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section style="padding:48px 48px 0;display:flex;flex-direction:column;gap:64px">
+<div style="font:700 15px Inter;color:#555;letter-spacing:.08em;text-transform:uppercase">Turno 2 · tres direcciones nuevas, más distintas entre sí</div>
+
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const U = 'assets/wp/';
+    const FI = 'Fútbol Internacional', OD = 'Otras Disciplinas', O = '#C2410C', B = '#1D4ED8';
+    const hero = { cat: FI, color: O, title: 'Barcelona: Flick convoca a 3 canteranos para suplir las 6 bajas por lesión', date: '29 oct 2026', img: U + '2026/10/Hansi-29.jpg' };
+    const heroSide = [
+      { n: 1, cat: OD, color: B, title: '¡Milwaukee hace historia! Los Cerveceros conquistan su primer título de la Serie Mundial', date: '29 oct 2026', img: U + '2026/10/Beis-1.png' },
+      { n: 2, cat: FI, color: O, title: 'Lamine Yamal se pronuncia en redes sociales luego de quedarse sin el Balón de Oro 2026', date: '27 oct 2026', img: U + '2026/10/Yamal-hoy.jpg' },
+      { n: 3, cat: FI, color: O, title: "Cuti Romero señala a Julián Álvarez como su elegido para llevar la camiseta '10' de Argentina", date: '27 oct 2026', img: U + '2026/10/Julian-Alvarez.avif' },
+      { n: 4, cat: FI, color: O, title: 'Bahía condena a Neymar por presunto "abuso verbal" tras ser expulsado por cubrirse la boca', date: '26 oct 2026', img: U + '2026/10/Neymar-expulsado.jpg' },
+    ];
+    const intl = [
+      { title: 'América cae frente a Pachuca y aplaza su clasificación a la Liguilla', date: '26 oct 2026', img: U + '2026/10/Pachiuca-America.avif' },
+      { title: 'América luce impresionante tifo en honor a Memo Ochoa', date: '26 oct 2026', img: U + '2026/10/Memo-Tifo.webp' },
+      { title: 'Mourinho sobre el Clásico español: "El mundo apasionado por el fútbol se detiene para verlo"', date: '24 oct 2026', img: U + '2026/10/Mou-24.webp' },
+      { title: 'Kvaratskhelia se perderá el resto de la temporada con el PSG tras sufrir una grave lesión', date: '21 oct 2026', img: U + '2026/10/Kva.webp' },
+    ];
+    const nacional = [1, 2, 3, 4];
+    const otras = [
+      { n: 1, title: 'LeBron James contesta a Trump tras sus críticas por su actitud durante el himno nacional', date: '24 oct 2026', img: U + '2026/10/Lebron-James-24.webp', noImg: false },
+      { n: 2, title: 'Propietario de los Yankees responsabiliza a los jugadores por quedar fuera de los playoffs', date: '21 oct 2026', img: U + '2026/10/Steinbrener.webp', noImg: false },
+      { n: 3, title: 'LeBron James suma 10 puntos en 18 minutos durante su debut con los 76ers', date: '9 oct 2026', img: U + '2026/10/Lebron-James.jpg', noImg: false },
+      { n: 4, title: 'Hermanos Buss presentan demanda relacionada con la venta de los Lakers', date: '8 oct 2026', img: U + '2026/10/Lakers-1024x768.webp', noImg: false },
+    ];
+    const baul = [
+      { title: 'A un año de la muerte de Pelé', img: U + '2024/01/WhatsApp-Image-2024-01-03-at-17.29.04_f30644e0-1024x631.jpg', noImg: false },
+      { title: 'Fallece «Lobo» Zagallo, técnico de Brasil', img: U + '2024/01/Zagalo-819x1024.jpg', noImg: false },
+      { title: '¡Sin contemplaciones! Memes se burlan de los Yankees', img: U + '2026/10/Besi.jpg', noImg: false },
+    ];
+    const sponsors = [
+      '2026/03/WhatsApp-Image-2026-03-23-at-13.21.55-720x1080.jpeg', '2024/03/WhatsApp-Image-2024-03-20-at-11.34.12_f5e9c947.png', '2026/03/WhatsApp-Image-2026-03-06-at-10.28.30-1000x1500.jpeg', '2026/01/WhatsApp-Image-2026-01-12-at-15.43.51-996x1494.jpeg', '2025/08/WhatsApp-Image-2025-08-18-at-09.44.43_e6df3809-1000x1500.jpg', '2025/06/WhatsApp-Image-2025-06-10-at-09.28.27_a47d9587-661x992.jpg', '2025/01/WhatsApp-Image-2025-01-28-at-18.28.12_f89cb8df-720x1080.jpg', '2026/03/system-protek-668x1003.png', '2024/02/WhatsApp-Image-2024-02-06-at-14.05.40_f710912e-400x600.jpg', '2024/03/WhatsApp-Image-2024-03-01-at-12.35.29_4414b973.png', '2026/03/WhatsApp-Image-2026-03-23-at-13.21.42-682x1024.jpeg',
+    ].map(p => U + p);
+    heroSide.forEach(a => { a.teal = a.cat === OD ? '#2DD4BF' : '#9BE15D'; a.tealDark = a.cat === OD ? '#0F766E' : '#4D7C0F'; });
+    const ticker = [hero.title, ...heroSide.map(a => a.title), intl[0].title];
+    const today = new Date(2026, 9, 29).toLocaleDateString('es-CR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    return { hero, heroSide, intl, nacional, otras, baul, sponsors, sponsorsMobile: sponsors.slice(0, 4), tickerLoop: [...ticker, ...ticker], today };
+  }
+}
+</script>
+</body>
+</html>

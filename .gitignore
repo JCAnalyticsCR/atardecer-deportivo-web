@@ -1,0 +1,11 @@
+# Metadatos del editor de diseño
+.thumbnail
+# Capturas de referencia (no forman parte del sitio)
+uploads/pasted-1793298086999-0.png
+# Local
+.claude/settings.local.json
+CLAUDE.local.md
+.env*
+__pycache__/
+.DS_Store
+Thumbs.db
