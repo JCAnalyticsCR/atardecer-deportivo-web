@@ -137,10 +137,8 @@ function ad_intro() {
 			<video class="ad-intro__video" data-src="<?php echo esc_url( $video ); ?>" poster="<?php echo esc_url( $poster ); ?>" muted playsinline preload="auto" width="848" height="478" aria-label="<?php echo esc_attr( 'Video de presentación de ' . $name ); ?>"></video>
 			<span class="ad-intro__bar" aria-hidden="true"></span>
 		</div>
-		<div class="ad-intro__actions">
-			<button type="button" class="ad-intro__sound" aria-pressed="false">🔈 Activar sonido</button>
-			<button type="button" class="ad-intro__enter">Entrar al sitio →</button>
-		</div>
+		<span class="ad-intro__hint" hidden>🔊 Tocá la pantalla para escuchar el sonido</span>
+		<button type="button" class="ad-intro__enter">Entrar al sitio →</button>
 		<button type="button" class="ad-intro__close" aria-label="Cerrar y entrar al sitio">✕</button>
 	</div>
 	<?php

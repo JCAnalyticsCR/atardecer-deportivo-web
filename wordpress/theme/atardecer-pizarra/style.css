@@ -161,25 +161,25 @@ a:hover { color: var(--turquesa-osc); }
 
 /* Portada de entrada: video de marca a pantalla completa, una vez por visita */
 html.ad-intro-open{overflow:hidden}
-.ad-intro{position:fixed;inset:0;z-index:1000;background:rgba(11,16,38,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:72px 16px 28px;font-family:Inter,sans-serif;color:#fff;transition:opacity .35s ease}
+/* lo que se anima detrás se detiene mientras corre el video, para no robarle cuadros */
+html.ad-intro-open .pz-ticker-track,html.ad-intro-open .ticker__items{animation-play-state:paused!important}
+.ad-intro{position:fixed;inset:0;z-index:1000;background:#0B1026;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:72px 16px 28px;font-family:Inter,sans-serif;color:#fff;cursor:pointer;transition:opacity .3s ease}
 .ad-intro.is-leaving{opacity:0}
 .ad-intro__kicker{display:flex;align-items:center;gap:10px;background:#9BE15D;color:#0B1026;font:800 13px 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.16em;padding:6px 14px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%)}
-.ad-intro__dot{width:8px;height:8px;border-radius:50%;background:#0B1026;animation:ad-intro-blink 1s steps(2) infinite}
-@keyframes ad-intro-blink{50%{opacity:0}}
-.ad-intro__frame{position:relative;width:min(960px,100%,calc((100vh - 240px) * 1.774));width:min(960px,100%,calc((100svh - 240px) * 1.774));padding:3px;background:#2DD4BF;clip-path:polygon(0 0,100% 0,calc(100% - 28px) 100%,0 100%)}
-.ad-intro__video{display:block;width:100%;height:auto;aspect-ratio:848/478;background:#fff;clip-path:polygon(0 0,100% 0,calc(100% - 27px) 100%,0 100%)}
-.ad-intro__bar{position:absolute;left:3px;bottom:3px;height:5px;width:calc(100% - 6px);background:#9BE15D;transform-origin:left;transform:scaleX(0);transition:transform .3s linear}
-.ad-intro__actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.ad-intro__sound{border:2px solid #2DD4BF;background:none;color:#2DD4BF;cursor:pointer;font:700 14px Inter,sans-serif;padding:12px 20px}
-.ad-intro__sound:hover,.ad-intro__sound[aria-pressed=true]{color:#9BE15D;border-color:#9BE15D}
+.ad-intro__dot{width:8px;height:8px;border-radius:50%;background:#0B1026}
+.ad-intro__frame{position:relative;width:min(960px,100%,calc((100vh - 230px) * 1.774));width:min(960px,100%,calc((100svh - 230px) * 1.774));border:3px solid #2DD4BF;background:#fff}
+.ad-intro__video{display:block;width:100%;height:auto;aspect-ratio:848/478;background:#fff}
+.ad-intro__bar{position:absolute;left:0;bottom:0;height:5px;width:100%;background:#9BE15D;transform-origin:left;transform:scaleX(0);transition:transform .25s linear}
+.ad-intro__hint{font-size:14px;color:#B9C7C3}
+.ad-intro__hint[hidden]{display:none}
 .ad-intro__enter{border:0;cursor:pointer;background:#9BE15D;color:#0B1026;font:800 16px 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.1em;padding:14px 28px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
 .ad-intro.is-ended .ad-intro__enter{animation:ad-intro-pulse 1.2s ease-in-out infinite}
 @keyframes ad-intro-pulse{50%{transform:scale(1.06)}}
 .ad-intro__close{position:absolute;top:18px;right:18px;width:48px;height:48px;border-radius:50%;border:2px solid #9BE15D;background:#0B1026;color:#fff;font:700 20px/1 Inter,sans-serif;cursor:pointer;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(155,225,93,.18)}
 .ad-intro__close:hover{background:#9BE15D;color:#0B1026}
 .ad-intro button:focus-visible{outline:3px solid #fff;outline-offset:3px}
-@media (max-width:600px){.ad-intro{gap:18px;padding-top:80px}.ad-intro__close{top:14px;right:14px}.ad-intro__enter{font-size:15px;padding:12px 22px}.ad-intro__sound{font-size:13px;padding:10px 16px}}
-@media (prefers-reduced-motion:reduce){.ad-intro{transition:none}.ad-intro__dot,.ad-intro.is-ended .ad-intro__enter{animation:none}.ad-intro__bar{transition:none}}
+@media (max-width:600px){.ad-intro{gap:16px;padding-top:80px}.ad-intro__close{top:14px;right:14px}.ad-intro__enter{font-size:15px;padding:12px 22px}}
+@media (prefers-reduced-motion:reduce){.ad-intro{transition:none}.ad-intro.is-ended .ad-intro__enter{animation:none}.ad-intro__bar{transition:none}}
 
 /* Patrocinadores */
 .sponsors { background: #fff; padding: 56px var(--gutter); }
