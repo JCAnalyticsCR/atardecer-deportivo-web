@@ -41,8 +41,9 @@ html.ad-intro-open .pz-ticker-track,html.ad-intro-open .ticker__items{animation-
 </div>
 <script>
 // Portada de entrada: sale una vez por visita (pestaña). Con la ✕, «Entrar al sitio» o Esc se entra al portal.
-// Siempre intenta arrancar con sonido. Si el navegador lo bloquea (pasa cuando la persona aún no tocó la página),
-// arranca sin sonido y el audio se activa —desde el inicio— con el primer toque, clic o tecla.
+// Arranca de inmediato y con sonido. Si el navegador no permite audio sin un toque previo, arranca sin sonido y el
+// audio se activa —desde el inicio— con el primer toque. Si el teléfono bloquea todo (iPhone en ahorro de batería),
+// el primer toque lo reproduce.
 (() => {
   const box = document.getElementById('ad-intro');
   if (!box) return;
@@ -56,31 +57,26 @@ html.ad-intro-open .pz-ticker-track,html.ad-intro-open .ticker__items{animation-
   const bar = box.querySelector('.ad-intro__bar');
   const hint = box.querySelector('.ad-intro__hint');
   const btns = [...box.querySelectorAll('button')];
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches || !!(navigator.connection && navigator.connection.saveData);
   const opener = document.activeElement;
-  let started = false;
   root.classList.add('ad-intro-open');
-  v.src = v.dataset.src;
 
-  const showHint = on => { hint.hidden = !on; };
-  function start() {
-    if (started || calm) return;
-    started = true;
-    v.muted = false;
-    v.play().then(() => showHint(false)).catch(() => {
-      v.muted = true;
-      showHint(true);
-      v.play().catch(() => {});
-    });
-  }
+  const say = text => { hint.textContent = text; hint.hidden = !text; };
+  v.src = v.dataset.src;
+  v.muted = false;
+  v.play().then(() => say('')).catch(() => {
+    v.muted = true;
+    v.play()
+      .then(() => say('🔊 Tocá la pantalla para activar el sonido'))
+      .catch(() => say('▶ Tocá la pantalla para ver el video'));
+  });
+
   // Primer gesto: activa el sonido y vuelve al inicio para que se escuche completo.
   function unlock(e) {
     if (e.target.closest && e.target.closest('.ad-intro__close, .ad-intro__enter')) return;
     if (!v.muted && !v.paused) return;
     if (v.currentTime > 0.3 || v.ended) v.currentTime = 0;
     v.muted = false;
-    started = true;
-    v.play().then(() => showHint(false)).catch(() => {});
+    v.play().then(() => say('')).catch(() => {});
   }
   function close() {
     if (box.classList.contains('is-leaving')) return;
@@ -88,7 +84,7 @@ html.ad-intro-open .pz-ticker-track,html.ad-intro-open .ticker__items{animation-
     box.classList.add('is-leaving');
     root.classList.remove('ad-intro-open');
     document.removeEventListener('keydown', onKey);
-    setTimeout(() => box.remove(), calm ? 0 : 300);
+    setTimeout(() => box.remove(), 300);
     if (opener && opener.focus) opener.focus();
   }
   function onKey(e) {
@@ -110,16 +106,7 @@ html.ad-intro-open .pz-ticker-track,html.ad-intro-open .ticker__items{animation-
   box.querySelector('.ad-intro__close').addEventListener('click', close);
   box.querySelector('.ad-intro__enter').addEventListener('click', close);
   document.addEventListener('keydown', onKey);
-
-  if (calm) {
-    hint.textContent = 'Tocá la pantalla para ver la presentación';
-    showHint(true);
-  } else {
-    // Arranca cuando ya hay video suficiente para no trabarse (o a los 3 s, lo que pase primero).
-    v.addEventListener('canplaythrough', start, { once: true });
-    setTimeout(start, 3000);
-  }
-  box.querySelector('.ad-intro__close').focus();
+  box.querySelector('.ad-intro__close').focus({ preventScroll: true });
 })();
 </script>
 <x-dc>

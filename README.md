@@ -4,7 +4,10 @@ Propuestas de diseño frontend para el nuevo sitio de Atardecer Deportivo.
 
 ## Archivos
 
-- `Atardecer Deportivo - Pizarra.dc.html` — dirección elegida (Pizarra · táctica nocturna), escritorio y móvil.
+- `index.html` — la portada publicada: Pizarra ya armada como HTML normal (sin `support.js`), liviana en móvil.
+  Se genera con `scripts/hornear_portada.py` (instrucciones dentro); no se edita a mano.
+- `Atardecer Deportivo - Pizarra.dc.html` — fuente editable de la dirección elegida (Pizarra · táctica nocturna).
+- `assets/video/` — video de entrada (24 fps constantes) y su póster.
 - `Atardecer Deportivo - 3 Ideas.dc.html` — las tres direcciones visuales exploradas.
 - `support.js` — runtime que renderiza los `.dc.html` (generado, no editar).
 - `assets/wp/` — imágenes traídas del sitio actual (misma ruta que `wp-content/uploads/`).
