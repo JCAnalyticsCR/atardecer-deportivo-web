@@ -15,8 +15,8 @@ function ad_opt( $key ) {
 		'x'              => '',
 		'instagram'      => '',
 		'cta_url'        => '',
-		'senal_on'       => true,
-		'senal_video'    => 0,
+		'intro_on'       => true,
+		'intro_video'    => 0,
 	);
 	return get_theme_mod( 'ad_' . $key, $defaults[ $key ] ?? '' );
 }
@@ -45,12 +45,12 @@ add_action( 'customize_register', function ( WP_Customize_Manager $wp ) {
 		'mime_type' => 'image',
 	) ) );
 
-	// Franja "Nuestra señal": video de marca antes de los patrocinadores
-	$wp->add_setting( 'ad_senal_on', array( 'default' => true, 'sanitize_callback' => 'rest_sanitize_boolean' ) );
-	$wp->add_control( 'ad_senal_on', array( 'label' => 'Mostrar el video de marca en la portada', 'section' => 'ad_sitio', 'type' => 'checkbox' ) );
-	$wp->add_setting( 'ad_senal_video', array( 'default' => 0, 'sanitize_callback' => 'absint' ) );
-	$wp->add_control( new WP_Customize_Media_Control( $wp, 'ad_senal_video', array(
-		'label'       => 'Video de marca (MP4, vacío = el del tema)',
+	// Video de entrada: pantalla completa al abrir el sitio, una vez por visita
+	$wp->add_setting( 'ad_intro_on', array( 'default' => true, 'sanitize_callback' => 'rest_sanitize_boolean' ) );
+	$wp->add_control( 'ad_intro_on', array( 'label' => 'Mostrar el video de entrada (una vez por visita)', 'section' => 'ad_sitio', 'type' => 'checkbox' ) );
+	$wp->add_setting( 'ad_intro_video', array( 'default' => 0, 'sanitize_callback' => 'absint' ) );
+	$wp->add_control( new WP_Customize_Media_Control( $wp, 'ad_intro_video', array(
+		'label'       => 'Video de entrada (MP4, vacío = el del tema)',
 		'description' => 'Corto y liviano: idealmente menos de 15 segundos y 2 MB.',
 		'section'     => 'ad_sitio',
 		'mime_type'   => 'video',

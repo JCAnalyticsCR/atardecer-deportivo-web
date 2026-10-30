@@ -159,26 +159,27 @@ a:hover { color: var(--turquesa-osc); }
 .baul__item .t22 { color: var(--baul-texto); }
 .baul__item a:hover { color: var(--baul-oro); }
 
-/* Nuestra señal (video de marca) */
-.senal { background: var(--noche); color: #fff; padding: 64px var(--gutter); display: grid; grid-template-columns: 3fr 2fr; gap: 48px; align-items: center; border-top: 3px solid var(--lima); }
-.senal__tv { position: relative; background: #fff; outline: 2px solid var(--turquesa); outline-offset: 6px; clip-path: polygon(0 0, 100% 0, calc(100% - 28px) 100%, 0 100%); }
-.senal__video { display: block; width: 100%; height: auto; aspect-ratio: 848 / 478; background: #fff; }
-.senal__hud { position: absolute; top: 14px; left: 14px; background: var(--noche); color: var(--lima); font: 800 12px var(--cond); text-transform: uppercase; letter-spacing: .16em; padding: 4px 10px; display: flex; gap: 8px; align-items: center; }
-.senal__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lima); }
-.senal__play { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); white-space: nowrap; border: 0; cursor: pointer; background: var(--noche); color: var(--lima); font: 800 16px var(--cond); text-transform: uppercase; letter-spacing: .12em; padding: 14px 26px; clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); transition: opacity .2s; }
-.senal__again, [data-state=ended] .senal__idle { display: none; }
-[data-state=ended] .senal__again { display: inline; }
-[data-state=playing] .senal__play { opacity: 0; pointer-events: none; }
-[data-state=playing] .senal__dot { animation: senal-blink 1s steps(2) infinite; }
-@keyframes senal-blink { 50% { opacity: 0; } }
-.senal__bar { position: absolute; left: 0; bottom: 0; height: 5px; width: 100%; background: var(--lima); transform-origin: left; transform: scaleX(0); transition: transform .3s linear; }
-.senal__copy { display: flex; flex-direction: column; gap: 18px; }
-.senal__copy h2 { margin: 0; font: 800 48px/.92 var(--cond); text-transform: uppercase; }
-.senal__copy h2 span { color: var(--lima); }
-.senal__copy p { margin: 0; font-size: 15px; line-height: 1.6; color: #B9C7C3; max-width: 440px; }
-.senal__actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.senal__sound { border: 2px solid var(--turquesa); background: none; color: var(--turquesa); cursor: pointer; font: 700 14px var(--sans, Inter, sans-serif); padding: 12px 20px; }
-.senal__sound:hover { color: var(--lima); border-color: var(--lima); }
+/* Portada de entrada: video de marca a pantalla completa, una vez por visita */
+html.ad-intro-open{overflow:hidden}
+.ad-intro{position:fixed;inset:0;z-index:1000;background:rgba(11,16,38,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:72px 16px 28px;font-family:Inter,sans-serif;color:#fff;transition:opacity .35s ease}
+.ad-intro.is-leaving{opacity:0}
+.ad-intro__kicker{display:flex;align-items:center;gap:10px;background:#9BE15D;color:#0B1026;font:800 13px 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.16em;padding:6px 14px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.ad-intro__dot{width:8px;height:8px;border-radius:50%;background:#0B1026;animation:ad-intro-blink 1s steps(2) infinite}
+@keyframes ad-intro-blink{50%{opacity:0}}
+.ad-intro__frame{position:relative;width:min(960px,100%,calc((100vh - 240px) * 1.774));width:min(960px,100%,calc((100svh - 240px) * 1.774));padding:3px;background:#2DD4BF;clip-path:polygon(0 0,100% 0,calc(100% - 28px) 100%,0 100%)}
+.ad-intro__video{display:block;width:100%;height:auto;aspect-ratio:848/478;background:#fff;clip-path:polygon(0 0,100% 0,calc(100% - 27px) 100%,0 100%)}
+.ad-intro__bar{position:absolute;left:3px;bottom:3px;height:5px;width:calc(100% - 6px);background:#9BE15D;transform-origin:left;transform:scaleX(0);transition:transform .3s linear}
+.ad-intro__actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.ad-intro__sound{border:2px solid #2DD4BF;background:none;color:#2DD4BF;cursor:pointer;font:700 14px Inter,sans-serif;padding:12px 20px}
+.ad-intro__sound:hover,.ad-intro__sound[aria-pressed=true]{color:#9BE15D;border-color:#9BE15D}
+.ad-intro__enter{border:0;cursor:pointer;background:#9BE15D;color:#0B1026;font:800 16px 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.1em;padding:14px 28px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.ad-intro.is-ended .ad-intro__enter{animation:ad-intro-pulse 1.2s ease-in-out infinite}
+@keyframes ad-intro-pulse{50%{transform:scale(1.06)}}
+.ad-intro__close{position:absolute;top:18px;right:18px;width:48px;height:48px;border-radius:50%;border:2px solid #9BE15D;background:#0B1026;color:#fff;font:700 20px/1 Inter,sans-serif;cursor:pointer;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(155,225,93,.18)}
+.ad-intro__close:hover{background:#9BE15D;color:#0B1026}
+.ad-intro button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media (max-width:600px){.ad-intro{gap:18px;padding-top:80px}.ad-intro__close{top:14px;right:14px}.ad-intro__enter{font-size:15px;padding:12px 22px}.ad-intro__sound{font-size:13px;padding:10px 16px}}
+@media (prefers-reduced-motion:reduce){.ad-intro{transition:none}.ad-intro__dot,.ad-intro.is-ended .ad-intro__enter{animation:none}.ad-intro__bar{transition:none}}
 
 /* Patrocinadores */
 .sponsors { background: #fff; padding: 56px var(--gutter); }
@@ -249,9 +250,6 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 }
 
 @media (max-width: 900px) {
-	.senal { grid-template-columns: 1fr; gap: 28px; padding: 48px var(--gutter); }
-	.senal__copy h2 { font-size: 34px; }
-	.senal__play { font-size: 13px; padding: 9px 16px; bottom: 12px; }
 	.menu-toggle { display: grid; }
 	.main-nav { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--noche); padding: 8px var(--gutter) 20px; z-index: 50; border-bottom: 3px solid var(--turquesa); }
 	.main-nav.is-open { display: block; }
@@ -297,6 +295,4 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 
 @media (prefers-reduced-motion: reduce) {
 	.ticker__items { animation: none; }
-	.senal__dot { animation: none; }
-	.senal__bar { transition: none; }
 }
