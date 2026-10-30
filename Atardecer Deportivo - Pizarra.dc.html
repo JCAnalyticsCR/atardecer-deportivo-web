@@ -30,6 +30,20 @@ html{scroll-behavior:smooth}
 .pz-spanel li button:hover,.pz-spanel li button:focus{background:#16203F;color:#9BE15D}
 .pz-spanel .pz-empty{padding:12px 18px;color:#8FA3A0;font-size:14px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* Señal (video de marca): estados idle / playing / ended */
+.pz-senal-bar{transition:transform .3s linear}
+.pz-senal-play .pz-when-ended,[data-state=ended] .pz-senal-play .pz-when-idle{display:none}
+[data-state=ended] .pz-senal-play .pz-when-ended{display:inline}
+[data-state=playing] .pz-senal-play{opacity:0;pointer-events:none}
+.pz-senal-play{transition:opacity .2s}
+[data-state=playing] .pz-senal-dot{animation:pz-blink 1s steps(2) infinite}
+@keyframes pz-blink{50%{opacity:0}}
+@media (max-width:900px){
+.pz-senal{grid-template-columns:1fr!important;gap:28px!important;padding-top:48px!important;padding-bottom:48px!important}
+.pz-senal .pz-h2{font-size:34px!important}
+.pz-senal-play{font-size:13px!important;padding:9px 16px!important;bottom:12px!important}
+}
+@media (prefers-reduced-motion:reduce){.pz-senal-dot{animation:none!important}.pz-senal-bar{transition:none}}
 /* ---- Tablet y teléfono: los estilos del diseño van en línea, por eso estas reglas usan !important ---- */
 @media (max-width:1100px){
 .pz-grid4{grid-template-columns:repeat(2,1fr)!important}
@@ -112,6 +126,25 @@ html{scroll-behavior:smooth}
 
       <div id="baul" class="pz-pad pz-baul" style="margin-top:56px;background:#1C120A;padding:48px;border-top:3px solid #7C4A1E"><div class="pz-head" style="display:flex;align-items:flex-end;gap:20px;margin-bottom:24px"><span class="pz-num" style="font:800 80px/.8 'Barlow Condensed';color:transparent;-webkit-text-stroke:2px #C9A880">04</span><h2 class="pz-h2" style="margin:0;font:800 40px/.9 'Barlow Condensed';text-transform:uppercase;color:#E9D9C3">Baúl de los<br><span style="color:#C9A880">Recuerdos</span></h2><span class="pz-line" style="height:2px;flex:1;background:repeating-linear-gradient(90deg,#7C4A1E 0 8px,transparent 8px 16px);margin-bottom:6px"></span><span style="font:700 13px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.14em;color:#C9A880">Archivo</span></div><div class="pz-grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px"><sc-for list="{{ baul }}" as="a" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:12px"><div style="aspect-ratio:3/2;background:#3B2614;overflow:hidden;filter:sepia(1) contrast(.85);display:grid;place-items:center;color:#C9A880;font-size:12px;clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),0 100%)"><sc-if value="{{ a.img }}" hint-placeholder-val="{{ true }}"><img src="{{ a.img }}" style="width:100%;height:100%;object-fit:cover"></sc-if><sc-if value="{{ a.noImg }}" hint-placeholder-val="{{ false }}">[Foto de archivo]</sc-if></div><span class="pz-t" style="font:700 22px/1.1 'Barlow Condensed';color:#F3E9DA">{{ a.title }}</span></div></sc-for></div></div>
 
+      <div id="senal" class="pz-pad pz-senal" style="background:#0B1026;color:#fff;padding:64px 48px;display:grid;grid-template-columns:3fr 2fr;gap:48px;align-items:center;border-top:3px solid #9BE15D">
+        <div class="pz-senal-tv" data-senal data-state="idle" style="position:relative;background:#fff;outline:2px solid #2DD4BF;outline-offset:6px;clip-path:polygon(0 0,100% 0,calc(100% - 28px) 100%,0 100%)">
+          <video class="pz-senal-video" playsinline muted preload="none" poster="assets/video/senal-atardecer.webp" data-src="assets/video/senal-atardecer.mp4" width="848" height="478" aria-label="Presentación de Atardecer Deportivo" style="display:block;width:100%;height:auto;aspect-ratio:848/478;background:#fff"></video>
+          <span aria-hidden="true" style="position:absolute;top:14px;left:14px;background:#0B1026;color:#9BE15D;font:800 12px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.16em;padding:4px 10px;display:flex;gap:8px;align-items:center"><span class="pz-senal-dot" style="width:8px;height:8px;border-radius:50%;background:#9BE15D"></span>Señal AD</span>
+          <span aria-hidden="true" style="position:absolute;top:14px;right:44px;background:#0B1026;color:#2DD4BF;font:700 12px 'Barlow Condensed';letter-spacing:.12em;padding:4px 10px">0:10</span>
+          <button type="button" class="pz-senal-play" style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%);white-space:nowrap;border:0;cursor:pointer;background:#0B1026;color:#9BE15D;font:800 16px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.12em;padding:14px 26px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)"><span class="pz-when-idle">▶ Ver presentación</span><span class="pz-when-ended">↻ Repetir con sonido</span></button>
+          <span class="pz-senal-bar" aria-hidden="true" style="position:absolute;left:0;bottom:0;height:5px;width:100%;background:#9BE15D;transform-origin:left;transform:scaleX(0)"></span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <span style="align-self:flex-start;background:#9BE15D;color:#0B1026;font:800 12px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.16em;padding:4px 10px">Nuestra señal</span>
+          <h2 class="pz-h2" style="margin:0;font:800 48px/.92 'Barlow Condensed';text-transform:uppercase">Información<br><span style="color:#9BE15D">de alto nivel</span></h2>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#B9C7C3;max-width:440px">Fútbol nacional, internacional y otras disciplinas, todos los días. Esta es la señal de Atardecer Deportivo: sume su marca a la nuestra.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button type="button" class="pz-senal-sound" style="border:2px solid #2DD4BF;background:none;color:#2DD4BF;cursor:pointer;font:700 14px Inter;padding:12px 20px">🔊 Verla con sonido</button>
+            <a href="#anunciese" style="background:#9BE15D;color:#0B1026;font:700 14px Inter;padding:14px 22px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)">Anúnciese</a>
+          </div>
+        </div>
+      </div>
+
       <div id="patrocinadores" class="pz-pad pz-sponsors" style="background:#fff;color:#0B1026;padding:56px 48px"><div class="pz-head" style="display:flex;align-items:flex-end;gap:20px;margin-bottom:24px"><span class="pz-num" style="font:800 80px/.8 'Barlow Condensed';color:transparent;-webkit-text-stroke:2px #0B1026">05</span><h2 class="pz-h2" style="margin:0;font:800 40px/.9 'Barlow Condensed';text-transform:uppercase">Nuestros<br><span style="color:#0F766E">patrocinadores</span></h2></div><div class="pz-grid5" style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px"><sc-for list="{{ sponsors }}" as="s" hint-placeholder-count="10"><a href="{{ s.href }}" target="{{ s.target }}" rel="noopener sponsored" style="background:#EAF6F1;color:#0B1026;padding:12px;display:flex;flex-direction:column;gap:10px;border-bottom:3px solid #2DD4BF"><div style="aspect-ratio:2/3;background:#fff;overflow:hidden"><img src="{{ s.img }}" alt="{{ s.name }}" style="width:100%;height:100%;object-fit:contain"></div><span style="font:700 16px/1.1 'Barlow Condensed';text-transform:uppercase;letter-spacing:.04em">{{ s.name }}</span><sc-if value="{{ s.url }}" hint-placeholder-val="{{ true }}"><span style="align-self:flex-start;background:#0B1026;color:#9BE15D;font-size:12px;font-weight:700;padding:6px 16px;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)">{{ s.cta }}</span></sc-if></a></sc-for></div>
         <div id="anunciese" class="pz-cta" style="margin-top:32px;background:#0B1026;color:#fff;padding:32px 40px;display:flex;justify-content:space-between;align-items:center;gap:24px;clip-path:polygon(0 0,100% 0,calc(100% - 28px) 100%,0 100%)"><span class="pz-cta-text" style="font:800 36px/.98 'Barlow Condensed';text-transform:uppercase;text-wrap:pretty;max-width:760px">¿Quiere que su marca llegue a <span style="color:#9BE15D">miles de aficionados</span>? Anúnciese con nosotros</span><a href="https://www.facebook.com/atardecerdeportivoCR" target="_blank" rel="noopener" class="pz-cta-btn" style="background:#9BE15D;color:#0B1026;font-weight:700;padding:14px 26px;flex:none;margin-right:28px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)">Anúnciese</a></div></div>
 
@@ -177,7 +210,7 @@ class Component extends DCLogic {
 }
 </script>
 <script>
-// Menú: marca la sección elegida. Lupa: busca entre los titulares de la portada.
+// Menú: marca la sección elegida. Lupa: busca entre los titulares de la portada. Señal: video de marca.
 (() => {
   // marca en el menú la sección elegida (también al entrar con #seccion en el enlace)
   const mark = () => {
@@ -235,6 +268,41 @@ class Component extends DCLogic {
       ul.append(li);
     });
   }
+  // Señal (video de marca). PC con mouse: descarga al acercarse y se reproduce sin sonido al verse.
+  // Teléfono, tablet o movimiento reducido: no descarga nada hasta que la persona toque reproducir.
+  function senal() {
+    const v = document.querySelector('.pz-senal-video');
+    if (!v) return setTimeout(senal, 200);
+    if (v.dataset.ready) return;
+    v.dataset.ready = '1';
+    const tv = v.closest('[data-senal]');
+    const bar = tv.querySelector('.pz-senal-bar');
+    const auto = matchMedia('(min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference)').matches
+      && !(navigator.connection && navigator.connection.saveData);
+    let done = false;
+    const state = s => { tv.dataset.state = s; };
+    const load = () => { if (!v.getAttribute('src')) { v.src = v.dataset.src; v.preload = 'auto'; } };
+    const start = withSound => {
+      load();
+      if (withSound) { v.muted = false; if (done || v.ended) v.currentTime = 0; done = false; }
+      v.play().catch(() => { v.muted = true; v.play().catch(() => state('idle')); });
+    };
+    v.addEventListener('timeupdate', () => { bar.style.transform = 'scaleX(' + (v.currentTime / (v.duration || 10)) + ')'; });
+    v.addEventListener('play', () => state('playing'));
+    v.addEventListener('pause', () => { if (!v.ended) state('idle'); });
+    v.addEventListener('ended', () => { done = true; state('ended'); });
+    tv.querySelector('.pz-senal-play').addEventListener('click', () => start(true));
+    document.querySelector('.pz-senal-sound').addEventListener('click', () => { tv.scrollIntoView({ block: 'center' }); start(true); });
+    // fuera de cuadro siempre se pausa (también si la puso la persona)
+    new IntersectionObserver(es => {
+      const e = es[0];
+      if (!e.isIntersecting && !v.paused) v.pause();
+      else if (auto && e.isIntersecting && !done && v.paused) start(false);
+    }, { threshold: 0.45 }).observe(tv);
+    if (auto) new IntersectionObserver(es => { if (es[0].isIntersecting) load(); }, { rootMargin: '50% 0px' }).observe(tv);
+  }
+  window.addEventListener('load', () => setTimeout(senal, 300));
+
   document.addEventListener('click', e => { if (e.target.closest('.pz-search')) open(); });
 })();
 </script>

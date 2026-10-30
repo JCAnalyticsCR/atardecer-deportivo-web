@@ -11,10 +11,12 @@ function ad_opt( $key ) {
 		'director_name'  => 'Miguel Delgado Segura',
 		'director_role'  => 'Periodista – Director',
 		'director_photo' => 0,
-		'facebook'       => '',
+		'facebook'       => 'https://www.facebook.com/atardecerdeportivoCR',
 		'x'              => '',
 		'instagram'      => '',
 		'cta_url'        => '',
+		'senal_on'       => true,
+		'senal_video'    => 0,
 	);
 	return get_theme_mod( 'ad_' . $key, $defaults[ $key ] ?? '' );
 }
@@ -41,6 +43,17 @@ add_action( 'customize_register', function ( WP_Customize_Manager $wp ) {
 		'label'     => 'Foto del director',
 		'section'   => 'ad_sitio',
 		'mime_type' => 'image',
+	) ) );
+
+	// Franja "Nuestra señal": video de marca antes de los patrocinadores
+	$wp->add_setting( 'ad_senal_on', array( 'default' => true, 'sanitize_callback' => 'rest_sanitize_boolean' ) );
+	$wp->add_control( 'ad_senal_on', array( 'label' => 'Mostrar el video de marca en la portada', 'section' => 'ad_sitio', 'type' => 'checkbox' ) );
+	$wp->add_setting( 'ad_senal_video', array( 'default' => 0, 'sanitize_callback' => 'absint' ) );
+	$wp->add_control( new WP_Customize_Media_Control( $wp, 'ad_senal_video', array(
+		'label'       => 'Video de marca (MP4, vacío = el del tema)',
+		'description' => 'Corto y liviano: idealmente menos de 15 segundos y 2 MB.',
+		'section'     => 'ad_sitio',
+		'mime_type'   => 'video',
 	) ) );
 } );
 

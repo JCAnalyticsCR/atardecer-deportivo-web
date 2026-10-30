@@ -113,6 +113,8 @@ $side = ad_query( '', 4, $shown );
 </section>
 <?php endif; ?>
 
+<?php ad_senal(); ?>
+
 <section class="sponsors">
 	<?php $sp = ad_sponsors(); ?>
 	<?php if ( $sp ) : ?>

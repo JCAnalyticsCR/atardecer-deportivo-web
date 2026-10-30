@@ -5,7 +5,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const AD_VERSION = '1.0.0';
+const AD_VERSION = '1.1.0';
 
 require_once __DIR__ . '/inc/template-tags.php';
 require_once __DIR__ . '/inc/sponsors.php';
@@ -56,6 +56,9 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'ad-fonts', 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap', array(), null );
 	wp_enqueue_style( 'ad-style', get_stylesheet_uri(), array( 'ad-fonts' ), AD_VERSION );
 	wp_enqueue_script( 'ad-nav', get_template_directory_uri() . '/assets/nav.js', array(), AD_VERSION, array( 'strategy' => 'defer', 'in_footer' => true ) );
+	if ( is_front_page() && ad_opt( 'senal_on' ) ) {
+		wp_enqueue_script( 'ad-senal', get_template_directory_uri() . '/assets/senal.js', array(), AD_VERSION, array( 'strategy' => 'defer', 'in_footer' => true ) );
+	}
 } );
 
 add_filter( 'wp_resource_hints', function ( $urls, $type ) {

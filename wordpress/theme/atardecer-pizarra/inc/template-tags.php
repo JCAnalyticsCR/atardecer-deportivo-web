@@ -117,3 +117,34 @@ function ad_default_menu() {
 	}
 	echo '</ul>';
 }
+
+/** Franja "Nuestra señal": video de marca. El MP4 no se descarga hasta que assets/senal.js lo pide. */
+function ad_senal() {
+	if ( ! ad_opt( 'senal_on' ) ) {
+		return;
+	}
+	$custom = (int) ad_opt( 'senal_video' );
+	$video  = $custom ? wp_get_attachment_url( $custom ) : get_template_directory_uri() . '/assets/video/senal-atardecer.mp4';
+	$poster = get_template_directory_uri() . '/assets/video/senal-atardecer.webp';
+	?>
+	<section class="senal" id="senal" aria-label="Nuestra señal">
+		<div class="senal__tv" data-state="idle">
+			<video class="senal__video" playsinline muted preload="none" width="848" height="478"
+				poster="<?php echo esc_url( $poster ); ?>" data-src="<?php echo esc_url( $video ); ?>"
+				aria-label="<?php echo esc_attr( 'Presentación de ' . get_bloginfo( 'name' ) ); ?>"></video>
+			<span class="senal__hud" aria-hidden="true"><span class="senal__dot"></span>Señal AD</span>
+			<button type="button" class="senal__play"><span class="senal__idle">▶ Ver presentación</span><span class="senal__again">↻ Repetir con sonido</span></button>
+			<span class="senal__bar" aria-hidden="true"></span>
+		</div>
+		<div class="senal__copy">
+			<span class="tag">Nuestra señal</span>
+			<h2>Información<br><span>de alto nivel</span></h2>
+			<p>Fútbol nacional, internacional y otras disciplinas, todos los días. Esta es la señal de <?php echo esc_html( get_bloginfo( 'name' ) ); ?>: sume su marca a la nuestra.</p>
+			<div class="senal__actions">
+				<button type="button" class="senal__sound">🔊 Verla con sonido</button>
+				<a class="btn" href="<?php echo esc_url( ad_cta_url() ); ?>">Anúnciese</a>
+			</div>
+		</div>
+	</section>
+	<?php
+}
