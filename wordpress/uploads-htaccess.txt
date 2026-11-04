@@ -1,0 +1,6 @@
+# Atardecer: en la carpeta de imágenes nunca se ejecuta código (así entraba el malware en el sitio viejo).
+<FilesMatch "\.(php|php[0-9]|phtml|phar|pl|py|cgi|sh|asp|aspx|jsp)$">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+Options -Indexes -ExecCGI

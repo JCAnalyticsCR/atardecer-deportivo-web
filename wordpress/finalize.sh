@@ -23,11 +23,20 @@ wp option update disallowed_keys "$(printf 'http://\nhttps://\nwww.\n<a \n[url\n
 wp plugin is-installed litespeed-cache && wp plugin activate litespeed-cache || true
 wp plugin auto-updates enable --all || true   # avisa si alguno ya estaba activado
 
-# Endurecimiento: sin editor de archivos en el panel
+# Endurecimiento: sin editor de archivos en el panel, admin solo por https, wp-config solo para el dueño
 wp config set DISALLOW_FILE_EDIT true --raw
+wp config set FORCE_SSL_ADMIN true --raw
+chmod 600 "$WP_PATH/wp-config.php"
+HERE="$(cd "$(dirname "$0")" && pwd)"
+# .htaccess: sin listado de carpetas ni acceso a archivos internos; en uploads nunca se ejecuta código
+grep -q "BEGIN Atardecer endurecimiento" "$WP_PATH/.htaccess" 2>/dev/null || {
+	cat "$HERE/htaccess-endurecimiento.txt" "$WP_PATH/.htaccess" > "$WP_PATH/.htaccess.nuevo" && mv "$WP_PATH/.htaccess.nuevo" "$WP_PATH/.htaccess"
+}
+[ -f "$WP_PATH/wp-content/uploads/.htaccess" ] || cp "$HERE/uploads-htaccess.txt" "$WP_PATH/wp-content/uploads/.htaccess"
 
 # Nombre público del director en las notas
-wp user update "${AD_AUTHOR:-miguel.delgado}" --display_name="Miguel Delgado Segura" --first_name="Miguel" --last_name="Delgado Segura"
+# (la dirección pública del autor no repite el usuario de acceso)
+wp user update "${AD_AUTHOR:-miguel.delgado}" --display_name="Miguel Delgado Segura" --first_name="Miguel" --last_name="Delgado Segura" --user_nicename=redaccion
 
 # Formulario de contacto: llega al correo del administrador
 form_id=$(wp post list --post_type=wpcf7_contact_form --title="Contacto" --field=ID | head -1)

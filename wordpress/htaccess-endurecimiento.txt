@@ -1,0 +1,9 @@
+# BEGIN Atardecer endurecimiento
+# Sin listado de carpetas y sin acceso directo a archivos que no son para el público.
+Options -Indexes
+<FilesMatch "^(wp-config\.php|readme\.html|license\.txt|xmlrpc\.php|\.htaccess.*|.*\.(bak|bk|old|orig|sql|log|ini|sh|zip|tar|gz))$">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+# END Atardecer endurecimiento
+
