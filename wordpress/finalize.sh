@@ -14,7 +14,12 @@ for p in $(wp plugin list --field=name --status=active,inactive | grep -E '^(hos
 	wp plugin deactivate "$p" || true
 	wp plugin delete "$p" || true
 done
-wp plugin install contact-form-7 two-factor updraftplus --activate
+wp plugin install contact-form-7 contact-form-7-honeypot two-factor updraftplus --activate
+wp language plugin install --all es_CR || true
+
+# Antispam del formulario: mensajes con enlaces se marcan como spam y no se envían
+# (Contact Form 7 revisa la lista de palabras bloqueadas de WordPress)
+wp option update disallowed_keys "$(printf 'http://\nhttps://\nwww.\n<a \n[url\n.ru/\n.top/\n.xyz/')"
 wp plugin is-installed litespeed-cache && wp plugin activate litespeed-cache || true
 wp plugin auto-updates enable --all || true   # avisa si alguno ya estaba activado
 
@@ -30,7 +35,8 @@ if [ -z "$form_id" ]; then
 	form_id=$(wp eval '
 		$f = WPCF7_ContactForm::get_template( array( "title" => "Contacto" ) );
 		$f->set_properties( array(
-			"form" => "<label>Nombre\n[text* nombre autocomplete:name]</label>\n\n<label>Correo electrónico\n[email* correo autocomplete:email]</label>\n\n<label>Asunto\n[text asunto]</label>\n\n<label>Mensaje\n[textarea* mensaje]</label>\n\n[submit \"Enviar\"]",
+			"form" => "<label>Nombre\n[text* nombre autocomplete:name]</label>\n\n<label>Correo electrónico\n[email* correo autocomplete:email]</label>\n\n<label>Asunto\n[text asunto]</label>\n\n<label>Mensaje\n[textarea* mensaje]</label>\n\n[honeypot sitio-web timecheck_enabled:true timecheck_threshold:4]\n\n[submit \"Enviar\"]",
+			"locale" => "es_CR",
 			"mail" => array_merge( $f->prop( "mail" ), array(
 				"subject"   => "[Atardecer Deportivo] [asunto]",
 				"sender"    => "Atardecer Deportivo <wordpress@atardecerdeportivocr.com>",
