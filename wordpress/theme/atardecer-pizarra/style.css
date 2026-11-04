@@ -1,7 +1,7 @@
 /*
 Theme Name: Atardecer Pizarra
 Description: Tema a la medida para Atardecer Deportivo — dirección "Pizarra · táctica nocturna".
-Version: 1.3.2
+Version: 1.3.4
 Requires at least: 7.0
 Requires PHP: 8.3
 Text Domain: atardecer
@@ -197,20 +197,45 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 .cta .btn { padding: 14px 26px; flex: none; margin-right: 28px; }
 
 /* ---------- Pie ---------- */
-.site-footer { background: var(--noche); color: #fff; padding: var(--gutter); display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; border-top: 3px solid var(--turquesa); }
+.site-footer { background: var(--noche); color: #fff; padding: var(--gutter) var(--gutter) 0; display: grid; grid-template-columns: 1.15fr .95fr 1.25fr .85fr; gap: 40px 48px; border-top: 3px solid var(--turquesa); }
 .site-footer .custom-logo, .site-footer .site-logo { height: 96px; width: auto; margin: -12px 0 -8px -8px; flex: none; align-self: flex-start; }
 .footer-brand { display: flex; flex-direction: column; gap: 14px; }
 .footer-tagline { font: 700 20px var(--cond); color: var(--lima); text-transform: uppercase; letter-spacing: .08em; }
-.footer-links ul { display: flex; flex-wrap: wrap; gap: 20px; list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--gris-2); }
+.footer-links ul { display: flex; flex-wrap: wrap; gap: 8px 20px; list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--gris-2); }
+.footer-links a:hover { color: #fff; }
 .footer-social { display: flex; gap: 16px; font: 700 13px var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--turquesa); }
-.footer-copy { font-size: 12px; color: var(--gris); margin-top: auto; }
-.footer-promo img { width: 100%; aspect-ratio: 1; object-fit: cover; clip-path: polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%); }
+/* columnas: título con la rayita lima de la casa */
+.footer-col { min-width: 0; }
+.footer-h { display: flex; align-items: center; gap: 10px; margin: 6px 0 16px; font: 700 15px var(--cond); text-transform: uppercase; letter-spacing: .16em; color: var(--turquesa); }
+.footer-h::before { content: ""; width: 18px; height: 3px; background: var(--lima); transform: skewX(-20deg); }
+.footer-sections { list-style: none; margin: 0; padding: 0; }
+.footer-sections a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px dashed rgba(255, 255, 255, .1); font-size: 14px; color: #E3ECEA; transition: color var(--dur-micro, .2s); }
+.footer-sections a:hover { color: var(--turquesa); }
+.footer-sections b { font: 600 11px var(--sans); color: var(--gris); background: rgba(45, 212, 191, .08); border-radius: 99px; padding: 3px 8px; }
+/* archivo como calendario: año + 12 meses en dos filas de seis */
+.footer-archive { display: grid; gap: 14px; }
+.footer-archive__year { display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: start; }
+.footer-archive__y { font: 800 22px/1 var(--cond); color: var(--lima); padding-top: 4px; }
+.footer-archive__y:hover { color: #fff; }
+.footer-archive ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.footer-archive li a, .footer-archive li span { display: block; text-align: center; padding: 6px 0; border-radius: 3px; font: 600 11px var(--sans); text-transform: uppercase; letter-spacing: .04em; }
+.footer-archive li a { background: rgba(45, 212, 191, .12); color: #D9F5EF; transition: background var(--dur-micro, .2s), color var(--dur-micro, .2s); }
+.footer-archive li a:hover { background: var(--turquesa); color: var(--noche); }
+.footer-archive li span { color: rgba(255, 255, 255, .2); border: 1px dashed rgba(255, 255, 255, .08); padding: 5px 0; }
+.footer-promos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.footer-promo img { width: 100%; aspect-ratio: 1; object-fit: cover; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); }
 .footer-promo .widget-title { display: none; }
-.footer-bottom { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 16px 24px; flex-wrap: wrap; border-top: 1px dashed rgba(45, 212, 191, .35); padding-top: 20px; margin-top: 4px; font-size: 12px; color: var(--texto-suave-osc, #8FA3A0); }
-.footer-credit { display: inline-flex; align-items: center; gap: 12px; color: #B9C7C3; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
-.footer-credit img { height: 30px; width: auto; display: block; opacity: .9; transition: opacity var(--dur-micro, .2s); }
-.footer-credit:hover { color: #fff; }
-.footer-credit:hover img { opacity: 1; }
+/* franja final de lado a lado */
+.footer-bottom { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 14px 24px; flex-wrap: wrap; margin: 8px calc(-1 * var(--gutter)) 0; padding: 16px var(--gutter); background: #070B1C; border-top: 1px solid rgba(45, 212, 191, .18); font-size: 12px; color: var(--gris); }
+.jc-credit { display: inline-flex; align-items: center; gap: 12px; padding: 8px 14px 8px 16px; background: #0E1530; border: 1px solid rgba(255, 255, 255, .08); border-radius: 6px; transition: border-color var(--dur-micro, .2s); }
+.jc-credit:hover { border-color: rgba(45, 212, 191, .55); }
+.jc-credit__label { font: 600 10px var(--sans); text-transform: uppercase; letter-spacing: .22em; color: var(--gris); padding-right: 4px; }
+.jc-credit__mark { height: 30px; width: auto; }
+.jc-credit__name { display: grid; line-height: 1.2; }
+.jc-credit__name b { font: 700 14px var(--sans); color: #fff; }
+.jc-credit__name small { font-size: 12px; color: var(--gris-2); }
+.jc-credit__arrow { color: var(--turquesa); font-size: 14px; margin-left: 6px; transition: transform var(--dur-micro, .2s); }
+.jc-credit:hover .jc-credit__arrow { transform: translate(2px, -2px); }
 
 /* ---------- Nota, página, archivo ---------- */
 .archive-head { background: var(--noche); color: #fff; padding: 40px var(--gutter); }
@@ -260,6 +285,7 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
+	.site-footer { grid-template-columns: 1fr 1fr; }
 	:root { --gutter: 32px; }
 	.mainbar { gap: 14px; }
 	.main-nav ul { gap: 12px; font-size: 13px; letter-spacing: .05em; }
@@ -284,7 +310,6 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 	.hero__side { margin-left: 0; padding: 0 var(--gutter); }
 	.split { grid-template-columns: 1fr; }
 	.site-footer { grid-template-columns: 1fr 1fr; }
-	.footer-brand { grid-column: 1 / -1; }
 }
 
 @media (max-width: 600px) {
@@ -315,8 +340,8 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 	.cta { flex-direction: column; align-items: flex-start; clip-path: none; padding: 24px; }
 	.cta__text { font-size: 26px; }
 	.cta .btn { margin-right: 0; }
-	.site-footer { grid-template-columns: 1fr 1fr; gap: 20px; }
-	.footer-brand, .footer-bottom { grid-column: 1 / -1; }
+	.site-footer { grid-template-columns: 1fr; gap: 28px; padding-top: 28px; }
+	.site-footer .site-logo, .site-footer .custom-logo { height: 80px; margin: 0 0 -6px -6px; }
 	.footer-bottom { flex-direction: column; align-items: flex-start; }
 	.archive-head h1 { font-size: 38px; }
 	.entry { font-size: 17px; }

@@ -153,3 +153,58 @@ function ad_initials( $name ) {
 	$parts = preg_split( '/\s+/', trim( (string) $name ) );
 	return mb_strtoupper( mb_substr( $parts[0] ?? '', 0, 1 ) . mb_substr( $parts[1] ?? '', 0, 1 ) );
 }
+
+/** Secciones del pie: las categorías con notas, sin la general "Solamente Fútbol" (repite a todas). */
+function ad_footer_sections() {
+	$cats = get_categories( array( 'hide_empty' => true, 'exclude' => array_filter( array( (int) get_cat_ID( 'Solamente Fútbol' ) ) ), 'orderby' => 'count', 'order' => 'DESC' ) );
+	if ( ! $cats ) {
+		return;
+	}
+	echo '<ul class="footer-sections">';
+	foreach ( $cats as $c ) {
+		printf(
+			'<li><a href="%s"><span>%s</span><b>%s</b></a></li>',
+			esc_url( get_category_link( $c ) ),
+			esc_html( $c->name ),
+			esc_html( number_format_i18n( $c->count ) )
+		);
+	}
+	echo '</ul>';
+}
+
+/**
+ * Archivo del pie como calendario: una fila por año y una casilla por mes; los meses sin notas se ven apagados.
+ * La consulta se guarda medio día y se renueva cuando se publica o se borra una nota.
+ */
+function ad_footer_archive() {
+	$rows = get_transient( 'ad_footer_archive' );
+	if ( false === $rows ) {
+		global $wpdb;
+		$rows = $wpdb->get_results( "SELECT YEAR(post_date) AS y, MONTH(post_date) AS m, COUNT(*) AS n FROM {$wpdb->posts} WHERE post_type = 'post' AND post_status = 'publish' GROUP BY y, m ORDER BY y DESC, m ASC", ARRAY_A );
+		set_transient( 'ad_footer_archive', $rows, 12 * HOUR_IN_SECONDS );
+	}
+	$years = array();
+	foreach ( (array) $rows as $r ) {
+		$years[ (int) $r['y'] ][ (int) $r['m'] ] = (int) $r['n'];
+	}
+	if ( ! $years ) {
+		return;
+	}
+	$months = array( 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic' );
+	echo '<div class="footer-archive">';
+	foreach ( $years as $y => $counts ) {
+		printf( '<div class="footer-archive__year"><a class="footer-archive__y" href="%s">%d</a><ol>', esc_url( get_year_link( $y ) ), (int) $y );
+		foreach ( $months as $i => $label ) {
+			$n = $counts[ $i + 1 ] ?? 0;
+			if ( $n ) {
+				printf( '<li><a href="%s" title="%s">%s</a></li>', esc_url( get_month_link( $y, $i + 1 ) ), esc_attr( sprintf( '%s %d · %s notas', wp_date( 'F', mktime( 0, 0, 0, $i + 1, 1, $y ) ), $y, number_format_i18n( $n ) ) ), esc_html( $label ) );
+			} else {
+				printf( '<li><span aria-hidden="true">%s</span></li>', esc_html( $label ) );
+			}
+		}
+		echo '</ol></div>';
+	}
+	echo '</div>';
+}
+add_action( 'save_post_post', fn() => delete_transient( 'ad_footer_archive' ) );
+add_action( 'deleted_post', fn() => delete_transient( 'ad_footer_archive' ) );
