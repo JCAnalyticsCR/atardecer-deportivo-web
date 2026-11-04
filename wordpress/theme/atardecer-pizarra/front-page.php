@@ -22,7 +22,7 @@ $side = ad_query( '', 4, $shown );
 <?php if ( $hero ) : ?>
 <section class="hero" aria-label="Principales">
 	<div class="hero__main">
-		<?php ad_img( $hero, 'ad-hero', '' ); ?>
+		<?php ad_img( $hero, 'ad-hero', '', true ); ?>
 		<div class="hero__box">
 			<span class="tag"><?php echo ad_cat_name( $hero ); ?></span>
 			<h1 class="hero__title"><a href="<?php echo esc_url( get_permalink( $hero ) ); ?>"><?php echo esc_html( get_the_title( $hero ) ); ?></a></h1>
@@ -88,7 +88,7 @@ $side = ad_query( '', 4, $shown );
 		<div class="opinion__author">
 			<?php
 			$photo = (int) ad_opt( 'director_photo' );
-			echo $photo ? wp_get_attachment_image( $photo, 'ad-thumb' ) : '<span class="opinion__avatar" aria-hidden="true"></span>';
+			echo $photo ? wp_get_attachment_image( $photo, 'ad-thumb' ) : '<span class="opinion__avatar" aria-hidden="true">' . esc_html( ad_initials( ad_opt( 'director_name' ) ) ) . '</span>';
 			?>
 			<div>
 				<div class="opinion__name"><?php echo esc_html( ad_opt( 'director_name' ) ); ?></div>

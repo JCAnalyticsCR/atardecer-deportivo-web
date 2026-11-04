@@ -63,8 +63,12 @@ if ! wp menu list --format=ids | grep -q .; then
 	wp menu location assign pie pie
 fi
 
-# Imágenes del pie
-if ! wp widget list footer-promos --format=ids | grep -q .; then
+# Imágenes del pie (fuera los widgets por defecto que WordPress pone en las barras al instalarse)
+for s in footer-promos sidebar-nota; do
+	ids=$(wp widget list "$s" --format=ids)
+	[ -n "$ids" ] && wp widget delete $ids
+done
+if true; then
 	for f in WhatsApp-Image-2025-05-15-at-09.49.15_b50260cf-1024x1024 WhatsApp-Image-2025-09-30-at-16.59.38-2-895x1024; do
 		att=$(wp post list --post_type=attachment --title="$f" --field=ID | head -1)
 		[ -n "$att" ] && wp widget add media_image footer-promos --attachment_id="$att" --size=large

@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	<div class="mainbar">
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?> — inicio"><?php ad_logo(); ?></a>
+		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?> — inicio"><?php ad_logo(); ?></a>
 		<nav class="main-nav" id="menu-principal" aria-label="Menú principal">
 			<?php
 			wp_nav_menu( array(

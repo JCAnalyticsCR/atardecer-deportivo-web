@@ -46,10 +46,13 @@ function ad_is_otras( $post ) {
 	return has_category( 'otras-disciplinas', $post );
 }
 
-/** Imagen destacada o un recuadro vacío con la etiqueta dada. */
-function ad_img( $post, $size = 'ad-card', $placeholder = 'Foto' ) {
+/** Imagen destacada o un recuadro vacío con la etiqueta dada. $eager: la foto principal de la página (carga primero). */
+function ad_img( $post, $size = 'ad-card', $placeholder = 'Foto', $eager = false ) {
 	if ( has_post_thumbnail( $post ) ) {
-		echo get_the_post_thumbnail( $post, $size, array( 'loading' => 'lazy', 'decoding' => 'async', 'alt' => esc_attr( get_the_title( $post ) ) ) );
+		$attrs = $eager
+			? array( 'loading' => 'eager', 'fetchpriority' => 'high', 'decoding' => 'async' )
+			: array( 'loading' => 'lazy', 'decoding' => 'async' );
+		echo get_the_post_thumbnail( $post, $size, $attrs + array( 'alt' => esc_attr( get_the_title( $post ) ) ) );
 		return;
 	}
 	echo '<div class="ph">' . esc_html( $placeholder ) . '</div>';
@@ -143,4 +146,10 @@ function ad_intro() {
 	</div>
 	<?php
 	wp_print_inline_script_tag( file_get_contents( __DIR__ . '/../assets/intro.js' ) );
+}
+
+/** Iniciales de un nombre ("Miguel Delgado Segura" → "MD") para cuando no hay foto. */
+function ad_initials( $name ) {
+	$parts = preg_split( '/\s+/', trim( (string) $name ) );
+	return mb_strtoupper( mb_substr( $parts[0] ?? '', 0, 1 ) . mb_substr( $parts[1] ?? '', 0, 1 ) );
 }

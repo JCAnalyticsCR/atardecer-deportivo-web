@@ -17,3 +17,6 @@ wordpress/import/
 wordpress/CREDENCIALES-LOCAL.txt
 # Notas internas del cliente (diagnóstico de seguridad): nunca al repo público
 *.local.md
+
+# capturas de revisión automática
+.playwright-mcp/

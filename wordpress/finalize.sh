@@ -9,12 +9,14 @@ WP_PATH="${1:?ruta de WordPress}"
 wp() { command wp --path="$WP_PATH" "$@"; }
 
 # Plugins: fuera lo que trae el instalador y no se usa; dentro solo lo necesario
-for p in hostinger-easy-onboarding hostinger-reach hostinger-ai-assistant elementor; do
-	wp plugin is-installed "$p" && wp plugin delete "$p" --deactivate || true
+# (los de Hostinger que se borran aquí se reinstalan desde hPanel si algún día hacen falta)
+for p in $(wp plugin list --field=name --status=active,inactive | grep -E '^(hostinger|elementor)'); do
+	wp plugin deactivate "$p" || true
+	wp plugin delete "$p" || true
 done
 wp plugin install contact-form-7 two-factor updraftplus --activate
 wp plugin is-installed litespeed-cache && wp plugin activate litespeed-cache || true
-wp plugin auto-updates enable --all
+wp plugin auto-updates enable --all || true   # avisa si alguno ya estaba activado
 
 # Endurecimiento: sin editor de archivos en el panel
 wp config set DISALLOW_FILE_EDIT true --raw

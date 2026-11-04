@@ -30,9 +30,15 @@
 				<?php endif; ?>
 			<?php endforeach; ?>
 		</div>
-		<span class="footer-copy">© <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
 	</div>
 	<?php dynamic_sidebar( 'footer-promos' ); ?>
+	<div class="footer-bottom">
+		<span class="footer-copy">© <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
+		<a class="footer-credit" href="https://jcanalytic.com" target="_blank" rel="noopener" aria-label="Desarrollado por JC Analytics">
+			<span>Desarrollado por</span>
+			<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/jc-analytics.webp' ); ?>" alt="JC Analytics" width="489" height="135" loading="lazy" decoding="async">
+		</a>
+	</div>
 </footer>
 </div>
 <?php wp_footer(); ?>

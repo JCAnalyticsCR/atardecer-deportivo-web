@@ -5,7 +5,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const AD_VERSION = '1.2.0';
+const AD_VERSION = '1.3.2';
 
 require_once __DIR__ . '/inc/template-tags.php';
 require_once __DIR__ . '/inc/sponsors.php';
@@ -59,6 +59,18 @@ add_action( 'wp_enqueue_scripts', function () {
 } );
 
 add_action( 'wp_body_open', 'ad_intro', 1 );
+
+// Ícono de la pestaña: el del tema, salvo que el editor ponga otro en Personalizar → Identidad del sitio
+add_action( 'wp_head', function () {
+	if ( has_site_icon() ) {
+		return;
+	}
+	$u = get_template_directory_uri() . '/assets/';
+	printf(
+		"<link rel=\"icon\" href=\"%1\$sfavicon-32.png\" sizes=\"32x32\">\n<link rel=\"icon\" href=\"%1\$sfavicon-512.png\" sizes=\"512x512\">\n<link rel=\"apple-touch-icon\" href=\"%1\$sfavicon-180.png\">\n",
+		esc_url( $u )
+	);
+} );
 
 add_filter( 'wp_resource_hints', function ( $urls, $type ) {
 	if ( 'preconnect' === $type ) {

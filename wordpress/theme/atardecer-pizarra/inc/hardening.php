@@ -33,6 +33,7 @@ add_action( 'send_headers', function () {
 	header( 'Referrer-Policy: strict-origin-when-cross-origin' );
 	header( 'X-Frame-Options: SAMEORIGIN' );
 	header( 'Permissions-Policy: camera=(), microphone=(), geolocation=()' );
+	header_remove( 'X-Powered-By' ); // no anunciar la versión de PHP
 } );
 
 // Mensaje de error de acceso genérico (no revelar si el usuario existe).
