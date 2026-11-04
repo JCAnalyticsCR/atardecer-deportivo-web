@@ -16,7 +16,7 @@ wp() { command wp --path="$WP_PATH" "$@"; }
 wp core is-installed || { echo "Primero instalá WordPress en $WP_PATH (wp core install)."; exit 1; }
 
 # Todo al día antes de empezar: WordPress, traducciones y PHP soportado
-php -r 'exit(version_compare(PHP_VERSION, "8.4", ">=") ? 0 : 1);' || echo "AVISO: PHP $(php -r 'echo PHP_VERSION;') — en hPanel → Avanzado → Configuración PHP elegí la versión más nueva (8.5)."
+php -r 'exit(version_compare(PHP_VERSION, "8.4", ">=") ? 0 : 1);' || echo "AVISO: el PHP de la terminal es $(php -r 'echo PHP_VERSION;'); revisá en hPanel → Avanzado → Configuración PHP que el sitio use la más nueva (8.5)."
 wp core update
 wp core update-db
 
@@ -40,7 +40,9 @@ wp option update users_can_register 0
 # Actualizaciones automáticas: núcleo (incluidas versiones mayores), plugins y temas de terceros
 wp config set WP_AUTO_UPDATE_CORE true --raw
 wp plugin auto-updates enable --all 2>/dev/null || true
-wp rewrite structure '/%postname%/' --hard
+# Enlaces /nombre-de-la-nota/ como en el sitio anterior. Sin --hard: los hostings que bloquean proc_open
+# (Hostinger) no dejan a WP-CLI relanzarse; el .htaccess del instalador ya trae las reglas de WordPress.
+wp option update permalink_structure '/%postname%/'
 
 # Contenido
 wp eval-file "$HERE/import-content.php"

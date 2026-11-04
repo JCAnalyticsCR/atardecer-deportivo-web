@@ -239,6 +239,17 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 .related { padding: 0 var(--gutter) 56px; }
 .page-content { padding: 40px var(--gutter) 56px; max-width: 920px; }
 
+/* Formulario de contacto (Contact Form 7) */
+.wpcf7 form { display: grid; gap: 16px; max-width: 640px; }
+.wpcf7 label { display: grid; gap: 6px; font: 600 13px var(--sans, Inter, sans-serif); text-transform: uppercase; letter-spacing: .08em; color: var(--noche); }
+.wpcf7 input[type=text], .wpcf7 input[type=email], .wpcf7 textarea { width: 100%; box-sizing: border-box; border: 2px solid var(--menta-2); background: #fff; padding: 12px 14px; font: 400 16px var(--sans, Inter, sans-serif); color: var(--noche); text-transform: none; letter-spacing: 0; }
+.wpcf7 input:focus, .wpcf7 textarea:focus { outline: none; border-color: var(--turquesa); }
+.wpcf7 textarea { min-height: 160px; resize: vertical; }
+.wpcf7 input[type=submit] { justify-self: start; border: 0; cursor: pointer; background: var(--noche); color: var(--lima); font: 800 16px var(--cond); text-transform: uppercase; letter-spacing: .1em; padding: 14px 28px; clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); }
+.wpcf7 input[type=submit]:hover { background: var(--turquesa-osc); color: #fff; }
+.wpcf7-not-valid-tip { font-size: 13px; color: #B91C1C; text-transform: none; letter-spacing: 0; }
+.wpcf7 form .wpcf7-response-output { margin: 0; padding: 12px 14px; border: 2px solid var(--turquesa); font-size: 14px; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
 	:root { --gutter: 32px; }

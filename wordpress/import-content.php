@@ -92,18 +92,15 @@ foreach ( get_categories( array( 'hide_empty' => false ) ) as $t ) {
 	$cat_ids[ $t->slug ] = $t->term_id;
 }
 
-// ---- Autor: todas las notas quedan a nombre del director (las cuentas viejas no se migran).
-$author = get_user_by( 'login', 'miguel.delgado' );
+// ---- Autor: todas las notas quedan a nombre de una cuenta que ya existe (las cuentas viejas no se migran
+// y este script no crea usuarios). AD_AUTHOR = login de esa cuenta; si no se da, el primer administrador.
+$author = get_user_by( 'login', getenv( 'AD_AUTHOR' ) ?: 'miguel.delgado' );
 if ( ! $author ) {
-	$uid = wp_insert_user( array(
-		'user_login'   => 'miguel.delgado',
-		'user_pass'    => wp_generate_password( 32, true, true ),
-		'display_name' => 'Miguel Delgado Segura',
-		'first_name'   => 'Miguel',
-		'last_name'    => 'Delgado Segura',
-		'role'         => 'editor',
-	) );
-	$author = get_user_by( 'id', $uid );
+	$admins = get_users( array( 'role' => 'administrator', 'number' => 1, 'orderby' => 'ID' ) );
+	$author = $admins[0] ?? null;
+}
+if ( ! $author ) {
+	WP_CLI::error( 'No hay ninguna cuenta a la cual asignar las notas: instale WordPress con su administrador primero.' );
 }
 
 // ---- Notas (de la más vieja a la más nueva, para que los IDs sigan el orden cronológico)
