@@ -25,7 +25,7 @@ $side = ad_query( '', 4, $shown );
 		<?php ad_img( $hero, 'ad-hero', '', true ); ?>
 		<div class="hero__box">
 			<span class="tag"><?php echo ad_cat_name( $hero ); ?></span>
-			<h1 class="hero__title"><a href="<?php echo esc_url( get_permalink( $hero ) ); ?>"><?php echo esc_html( get_the_title( $hero ) ); ?></a></h1>
+			<h1 class="hero__title"<?php echo ad_title_len( $hero ); ?>><a href="<?php echo esc_url( get_permalink( $hero ) ); ?>"><?php echo esc_html( get_the_title( $hero ) ); ?></a></h1>
 			<span class="meta"><?php echo ad_date( $hero ); ?> · <?php echo esc_html( get_the_author_meta( 'display_name', $hero->post_author ) ); ?></span>
 		</div>
 	</div>

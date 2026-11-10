@@ -15,7 +15,7 @@ while ( have_posts() ) :
 			<?php if ( $cat ) : ?>
 				<a class="tag" href="<?php echo esc_url( get_category_link( $cat ) ); ?>"><?php echo esc_html( $cat->name ); ?></a>
 			<?php endif; ?>
-			<h1 class="article__title"><?php the_title(); ?></h1>
+			<h1 class="article__title"<?php echo ad_title_len(); ?>><?php the_title(); ?></h1>
 			<span class="article__meta"><?php echo ad_date(); ?> · <?php the_author(); ?></span>
 		</header>
 		<div>

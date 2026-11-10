@@ -208,3 +208,12 @@ function ad_footer_archive() {
 }
 add_action( 'save_post_post', fn() => delete_transient( 'ad_footer_archive' ) );
 add_action( 'deleted_post', fn() => delete_transient( 'ad_footer_archive' ) );
+
+/**
+ * Largo del título como variable CSS (--len) para que la letra se ajuste sola:
+ * un título corto se ve grande y uno largo se achica hasta caber en unas tres líneas (ver .hero__title en style.css).
+ */
+function ad_title_len( $post = null ) {
+	$len = mb_strlen( wp_strip_all_tags( get_the_title( $post ) ) );
+	return sprintf( ' style="--len:%d"', max( 10, min( 200, $len ) ) );
+}
