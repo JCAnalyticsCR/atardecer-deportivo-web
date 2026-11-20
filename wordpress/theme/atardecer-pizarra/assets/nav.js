@@ -8,3 +8,15 @@ document.querySelectorAll('[data-toggle]').forEach((btn) => {
 		if (open) target.querySelector('input')?.focus();
 	});
 });
+
+// Cinta de patrocinadores: las imágenes fuera de la vista horizontal no se cargarían a tiempo con el
+// lazy-load nativo (quedan recortadas), así que se piden todas juntas cuando la sección se acerca.
+const cinta = document.querySelector('.sponsors__marquee');
+if (cinta && 'IntersectionObserver' in window) {
+	const io = new IntersectionObserver((entries) => {
+		if (!entries[0].isIntersecting) return;
+		cinta.querySelectorAll('img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; });
+		io.disconnect();
+	}, { rootMargin: '50%' });
+	io.observe(cinta);
+}

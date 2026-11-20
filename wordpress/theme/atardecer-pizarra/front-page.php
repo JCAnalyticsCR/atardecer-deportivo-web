@@ -117,20 +117,29 @@ $side = ad_query( '', 4, $shown );
 	<?php $sp = ad_sponsors(); ?>
 	<?php if ( $sp ) : ?>
 		<?php ad_section_head( '05', 'Nuestros', 'patrocinadores' ); ?>
-		<div class="sponsors__grid">
-			<?php foreach ( $sp as $p ) : ?>
-				<?php
-				$url = get_post_meta( $p->ID, 'ad_sponsor_url', true );
-				$tag = $url ? 'a' : 'div';
-				?>
-				<<?php echo $tag; ?> class="sponsor"<?php echo $url ? ' href="' . esc_url( $url ) . '" rel="noopener sponsored" target="_blank"' : ''; ?>>
-					<div class="sponsor__img"><?php ad_img( $p, 'large', get_the_title( $p ) ); ?></div>
-					<span class="sponsor__name"><?php echo esc_html( get_the_title( $p ) ); ?></span>
-					<?php if ( $url ) : ?>
-						<span class="btn"><?php echo str_contains( $url, 'wa.me' ) ? 'WhatsApp' : 'Ver más'; ?></span>
-					<?php endif; ?>
-				</<?php echo $tag; ?>>
-			<?php endforeach; ?>
+		<?php /* Cinta que avanza sola, como "Última hora": dos copias seguidas para que el giro no tenga corte;
+		la segunda la ignoran los lectores de pantalla y el teclado. */ ?>
+		<div class="sponsors__marquee" style="--n:<?php echo count( $sp ); ?>">
+			<div class="sponsors__track">
+				<?php foreach ( array( false, true ) as $dup ) : ?>
+					<div class="sponsors__group"<?php echo $dup ? ' aria-hidden="true"' : ''; ?>>
+						<?php foreach ( $sp as $p ) : ?>
+							<?php
+							$url  = get_post_meta( $p->ID, 'ad_sponsor_url', true );
+							$tag  = $url ? 'a' : 'div';
+							$link = $url ? ' href="' . esc_url( $url ) . '" rel="noopener sponsored" target="_blank"' . ( $dup ? ' tabindex="-1"' : '' ) : '';
+							?>
+							<<?php echo $tag; ?> class="sponsor"<?php echo $link; ?>>
+								<div class="sponsor__img"><?php ad_img( $p, 'medium_large', get_the_title( $p ) ); ?></div>
+								<span class="sponsor__name"><?php echo esc_html( get_the_title( $p ) ); ?></span>
+								<?php if ( $url ) : ?>
+									<span class="btn"><?php echo str_contains( $url, 'wa.me' ) ? 'WhatsApp' : 'Ver más'; ?></span>
+								<?php endif; ?>
+							</<?php echo $tag; ?>>
+						<?php endforeach; ?>
+					</div>
+				<?php endforeach; ?>
+			</div>
 		</div>
 	<?php endif; ?>
 	<div class="cta">

@@ -1,7 +1,7 @@
 /*
 Theme Name: Atardecer Pizarra
 Description: Tema a la medida para Atardecer Deportivo — dirección "Pizarra · táctica nocturna".
-Version: 1.3.8
+Version: 1.3.9
 Requires at least: 7.0
 Requires PHP: 8.3
 Text Domain: atardecer
@@ -187,9 +187,17 @@ html.ad-intro-open .pz-ticker-track,html.ad-intro-open .ticker__items{animation-
 
 /* Patrocinadores */
 .sponsors { background: #fff; padding: 56px var(--gutter); }
-/* flex en vez de grid: si la última fila queda incompleta, se centra en vez de quedar pegada a la izquierda */
-.sponsors__grid { --cols: 5; --gap: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
-.sponsors__grid > .sponsor { flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols)); min-width: 0; }
+/* Cinta de patrocinadores: avanza sola de derecha a izquierda (como "Última hora"); se detiene al pasar el
+   mouse, al tocarla o al llegar con el teclado. Velocidad pareja: ~4,5 s por patrocinador. */
+.sponsors__marquee { --card: 176px; --gap: 16px; overflow: hidden; margin: 0 calc(-1 * var(--gutter)); padding: 4px 0;
+	-webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+	        mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); }
+.sponsors__track { display: flex; width: max-content; animation: sponsors calc(var(--n, 10) * 4.5s) linear infinite; }
+.sponsors__group { display: flex; gap: var(--gap); padding-right: var(--gap); }
+.sponsors__marquee:hover .sponsors__track, .sponsors__marquee:focus-within .sponsors__track, .sponsors__marquee:active .sponsors__track { animation-play-state: paused; }
+html.ad-intro-open .sponsors__track { animation-play-state: paused; }
+@keyframes sponsors { to { transform: translateX(-50%); } }
+.sponsors__group > .sponsor { flex: 0 0 var(--card); }
 .sponsor { background: var(--menta); color: var(--noche); padding: 12px; display: flex; flex-direction: column; gap: 10px; border-bottom: 3px solid var(--turquesa); }
 a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 .sponsor__img { aspect-ratio: 2 / 3; background: #fff; overflow: hidden; }
@@ -295,7 +303,6 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 	.main-nav ul { gap: 12px; font-size: 13px; letter-spacing: .05em; }
 	.hero__title { font-size: clamp(26px, calc(2300px / var(--len, 60)), 44px); }
 	.grid-4 { grid-template-columns: repeat(2, 1fr); }
-	.sponsors__grid { --cols: 3; }
 	.article { grid-template-columns: 1fr; }
 	.sidebar { position: static; }
 }
@@ -340,7 +347,9 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 	.grid-4 .card + .card .t20 { font-size: 17px; }
 	.grid-3 { grid-template-columns: 1fr; }
 	.row { grid-template-columns: 1fr 110px; }
-	.sponsors__grid { --cols: 2; --gap: 12px; }
+	.sponsors__marquee { --card: 138px; --gap: 12px; }
+	.sponsor { padding: 8px; gap: 8px; }
+	.sponsor__name { font-size: 14px; }
 	.cta { flex-direction: column; align-items: flex-start; clip-path: none; padding: 24px; }
 	.cta__text { font-size: 26px; }
 	.cta .btn { margin-right: 0; }
@@ -353,4 +362,9 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 
 @media (prefers-reduced-motion: reduce) {
 	.ticker__items { animation: none; }
+	/* sin movimiento: la cinta se recorre a mano y la copia duplicada sobra */
+	.sponsors__marquee { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-mask-image: none; mask-image: none; padding-inline: var(--gutter); }
+	.sponsors__track { animation: none; }
+	.sponsors__group[aria-hidden] { display: none; }
+	.sponsors__group > .sponsor { scroll-snap-align: start; }
 }
