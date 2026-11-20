@@ -1,7 +1,7 @@
 /*
 Theme Name: Atardecer Pizarra
 Description: Tema a la medida para Atardecer Deportivo — dirección "Pizarra · táctica nocturna".
-Version: 1.3.9
+Version: 1.4.4
 Requires at least: 7.0
 Requires PHP: 8.3
 Text Domain: atardecer
@@ -62,12 +62,23 @@ a:hover { color: var(--turquesa-osc); }
 .mainbar { display: flex; justify-content: space-between; align-items: center; padding: 16px var(--gutter); gap: 24px; }
 .mainbar .brand { flex: none; display: block; }
 .mainbar .custom-logo, .mainbar .site-logo { height: 84px; width: auto; max-width: none; margin: -10px 0; }
-.main-nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; font: 700 15px var(--cond); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+.main-nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; font: 700 15px var(--cond); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
 .main-nav a { color: #fff; padding-bottom: 4px; border-bottom: 3px solid transparent; }
 .main-nav a:hover, .main-nav .current-menu-item > a, .main-nav .current-menu-ancestor > a, .main-nav .current-category-ancestor > a { color: var(--lima); border-bottom-color: var(--lima); }
 .header-tools { display: flex; gap: 10px; align-items: center; }
 .icon-btn { width: 38px; height: 38px; border: 2px solid var(--turquesa); color: var(--turquesa); background: none; display: grid; place-items: center; font-size: 15px; cursor: pointer; clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); }
 .menu-toggle { display: none; }
+/* Patrocinador oficial en la cabecera: miniatura + leyenda */
+.official { display: flex; align-items: center; gap: 10px; flex: none; }
+.official__img { width: 58px; height: 58px; overflow: hidden; background: #111; flex: none; border: 2px solid var(--turquesa); clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); transition: border-color var(--dur-micro, .2s); }
+a.official:hover .official__img { border-color: var(--lima); }
+.official__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.official__txt { display: grid; line-height: 1; font: 800 14px/1 var(--cond); text-transform: uppercase; letter-spacing: .1em; color: #fff; }
+.official__txt small { font: 700 10px/1.2 var(--cond); letter-spacing: .18em; color: var(--lima); }
+.official__txt b { font-weight: 800; }
+.topbar__search { background: none; border: 0; padding: 0; color: #fff; font: 600 12px var(--sans); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.topbar__search span { color: var(--turquesa); font-size: 15px; line-height: 1; }
+.topbar__search:hover, .topbar__search[aria-expanded="true"] { color: var(--lima); }
 .search-panel { display: none; padding: 0 var(--gutter) 16px; }
 .search-panel.is-open { display: block; }
 .search-form { display: flex; gap: 8px; }
@@ -296,24 +307,38 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 .wpcf7 form .wpcf7-response-output { margin: 0; padding: 12px 14px; border: 2px solid var(--turquesa); font-size: 14px; }
 
 /* ---------- Responsive ---------- */
+@media (max-width: 1320px) {
+	.main-nav ul { gap: 16px; letter-spacing: .06em; }
+}
+@media (max-width: 1250px) {
+	.main-nav ul { gap: 14px; font-size: 14px; letter-spacing: .05em; }
+}
 @media (max-width: 1100px) {
 	.site-footer { grid-template-columns: 1fr 1fr; }
 	:root { --gutter: 32px; }
 	.mainbar { gap: 14px; }
 	.main-nav ul { gap: 12px; font-size: 13px; letter-spacing: .05em; }
+	.mainbar .custom-logo, .mainbar .site-logo { height: 64px; margin: -4px 0; }
+	.official { gap: 8px; }
+	.official__img { width: 46px; height: 46px; }
+	.official__txt { font-size: 12px; }
+	.official__txt small { font-size: 9px; }
 	.hero__title { font-size: clamp(26px, calc(2300px / var(--len, 60)), 44px); }
 	.grid-4 { grid-template-columns: repeat(2, 1fr); }
 	.article { grid-template-columns: 1fr; }
 	.sidebar { position: static; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
 	.menu-toggle { display: grid; }
 	.main-nav { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--noche); padding: 8px var(--gutter) 20px; z-index: 50; border-bottom: 3px solid var(--turquesa); }
 	.main-nav.is-open { display: block; }
 	.main-nav ul { flex-direction: column; gap: 0; }
 	.main-nav li a { display: block; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, .08); }
 	.site-header { position: relative; }
+}
+
+@media (max-width: 900px) {
 	.hero { grid-template-columns: 1fr; }
 	.hero__main { clip-path: none; min-height: 0; }
 	.hero__main img { position: static; aspect-ratio: 16 / 10; height: auto; }
@@ -328,6 +353,10 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 	.topbar__date { display: none; }
 	.topbar { justify-content: flex-end; }
 	.mainbar .custom-logo, .mainbar .site-logo { height: 52px; margin: 0; }
+	.official { gap: 8px; }
+	.official__img { width: 44px; height: 44px; }
+	.official__txt { font-size: 12px; }
+	.official__txt small { font-size: 9px; }
 	.mainbar { padding-top: 10px; padding-bottom: 10px; }
 	.ticker__label { padding-left: var(--gutter); font-size: 12px; }
 	.hero__main img { aspect-ratio: 4 / 3; }
@@ -358,6 +387,16 @@ a.sponsor:hover { color: var(--noche); border-bottom-color: var(--lima); }
 	.footer-bottom { flex-direction: column; align-items: flex-start; }
 	.archive-head h1 { font-size: 38px; }
 	.entry { font-size: 17px; }
+}
+
+@media (max-width: 360px) {
+	.mainbar { gap: 8px; }
+	.mainbar .custom-logo, .mainbar .site-logo { height: 46px; }
+	.official { gap: 6px; }
+	.official__img { width: 38px; height: 38px; }
+	.official__txt { font-size: 11px; letter-spacing: .06em; }
+	.official__txt small { letter-spacing: .12em; }
+	.section-head { flex-wrap: wrap; }
 }
 
 @media (prefers-reduced-motion: reduce) {

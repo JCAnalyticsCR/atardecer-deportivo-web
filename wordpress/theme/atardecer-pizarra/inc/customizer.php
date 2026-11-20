@@ -17,6 +17,8 @@ function ad_opt( $key ) {
 		'cta_url'        => '',
 		'intro_on'       => true,
 		'intro_video'    => 0,
+		'official'       => 0,
+		'official_logo'  => 0,
 	);
 	return get_theme_mod( 'ad_' . $key, $defaults[ $key ] ?? '' );
 }
@@ -43,6 +45,28 @@ add_action( 'customize_register', function ( WP_Customize_Manager $wp ) {
 		'label'     => 'Foto del director',
 		'section'   => 'ad_sitio',
 		'mime_type' => 'image',
+	) ) );
+
+	// Patrocinador oficial: su imagen en miniatura en la cabecera, junto al menú
+	$choices = array( 0 => '— Ninguno —' );
+	foreach ( ad_sponsors() as $sp ) {
+		$choices[ $sp->ID ] = get_the_title( $sp );
+	}
+	$wp->add_setting( 'ad_official', array( 'default' => 0, 'sanitize_callback' => 'absint' ) );
+	$wp->add_control( 'ad_official', array(
+		'label'       => 'Patrocinador oficial (cabecera)',
+		'description' => 'Sale en miniatura arriba a la derecha con la leyenda "Patrocinador oficial".',
+		'section'     => 'ad_sitio',
+		'type'        => 'select',
+		'choices'     => $choices,
+	) );
+
+	$wp->add_setting( 'ad_official_logo', array( 'default' => 0, 'sanitize_callback' => 'absint' ) );
+	$wp->add_control( new WP_Customize_Media_Control( $wp, 'ad_official_logo', array(
+		'label'       => 'Logo del patrocinador oficial (cuadrado, opcional)',
+		'description' => 'Si queda vacío se usa la imagen del patrocinador.',
+		'section'     => 'ad_sitio',
+		'mime_type'   => 'image',
 	) ) );
 
 	// Video de entrada: pantalla completa al abrir el sitio, una vez por visita
