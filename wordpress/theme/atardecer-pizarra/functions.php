@@ -5,7 +5,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const AD_VERSION = '1.3.7';
+const AD_VERSION = '1.3.8';
 
 require_once __DIR__ . '/inc/template-tags.php';
 require_once __DIR__ . '/inc/sponsors.php';
