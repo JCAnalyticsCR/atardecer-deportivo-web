@@ -14,7 +14,6 @@
 	<div class="topbar">
 		<span class="topbar__date"><?php echo ad_today(); ?></span>
 		<div class="topbar__links">
-			<button class="topbar__search" type="button" data-toggle="buscar" aria-controls="buscar" aria-expanded="false"><span aria-hidden="true">⌕</span> Buscar</button>
 			<?php if ( ad_opt( 'facebook' ) ) : ?>
 				<a href="<?php echo esc_url( ad_opt( 'facebook' ) ); ?>" rel="noopener" target="_blank">Facebook</a>
 			<?php endif; ?>
@@ -34,7 +33,7 @@
 			?>
 		</nav>
 		<div class="header-tools">
-			<?php ad_official_sponsor(); ?>
+			<button class="icon-btn" type="button" data-toggle="buscar" aria-controls="buscar" aria-expanded="false" aria-label="Buscar">⌕</button>
 			<button class="icon-btn menu-toggle" type="button" data-toggle="menu-principal" aria-controls="menu-principal" aria-expanded="false" aria-label="Menú">☰</button>
 		</div>
 	</div>

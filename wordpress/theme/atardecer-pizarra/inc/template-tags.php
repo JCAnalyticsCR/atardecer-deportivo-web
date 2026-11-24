@@ -217,24 +217,3 @@ function ad_title_len( $post = null ) {
 	$len = mb_strlen( wp_strip_all_tags( get_the_title( $post ) ) );
 	return sprintf( ' style="--len:%d"', max( 10, min( 200, $len ) ) );
 }
-
-/** Insignia de la cabecera: miniatura del patrocinador oficial elegido en Personalizar, con su enlace. */
-function ad_official_sponsor() {
-	$p = get_post( (int) ad_opt( 'official' ) );
-	if ( ! $p || 'patrocinador' !== $p->post_type || 'publish' !== $p->post_status || ! has_post_thumbnail( $p ) ) {
-		return;
-	}
-	$url  = get_post_meta( $p->ID, 'ad_sponsor_url', true );
-	$tag  = $url ? 'a' : 'div';
-	$name = get_the_title( $p );
-	$logo = (int) ad_opt( 'official_logo' );
-	$img  = $logo
-		? wp_get_attachment_image( $logo, 'thumbnail', false, array( 'alt' => esc_attr( $name ), 'loading' => 'eager', 'decoding' => 'async' ) )
-		: get_the_post_thumbnail( $p, 'medium', array( 'alt' => esc_attr( $name ), 'loading' => 'eager', 'decoding' => 'async' ) );
-	printf(
-		'<%1$s class="official"%2$s><span class="official__img">%3$s</span><span class="official__txt"><small>Patrocinador</small><b>oficial</b></span></%1$s>',
-		$tag,
-		$url ? ' href="' . esc_url( $url ) . '" target="_blank" rel="noopener sponsored" aria-label="' . esc_attr( 'Patrocinador oficial: ' . $name ) . '"' : '',
-		$img
-	);
-}
